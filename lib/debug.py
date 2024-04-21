@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # lib/debug.py
 
-from models.__init__.py import CONN CURSOR
+from models.__init__ import CONN, CURSOR
 import ipdb
 
 
