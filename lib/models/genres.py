@@ -95,3 +95,35 @@ class Genres:
             cls.all[genre.id] = genre
         return genre
     
+    @classmethod
+    def get_all(cls):
+        """Return a list containing a Genres object per row in the table"""
+        sql = """
+            SELECT *
+            FROM genres
+        """
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        """Return a Genres object corresponding to the table row using the id/primary key"""
+        sql = """
+            SELECT *
+            FROM genres
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_by_name(cls, name):
+        """Return a Genres object corresponding to the table row using the genre name"""
+        sql = """
+            SELECT *
+            FROM genres
+            WHERE name is ?
+        """
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None

@@ -24,9 +24,9 @@ def main():
 
 def menu():
     print("Please select an option")
-    print("Press e or q to exit the program")
-    print("Press j to list all genres")
-    print("Press a to list all albums")
+    print("'e' or 'q' Press e or q to exit the program")
+    print("'j' Press j to list all genres")
+    print("'a' Press a to list all albums")
     print("Some pointless function")
 
 if __name__ == "__main__":
