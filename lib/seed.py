@@ -28,7 +28,8 @@ def seed_database():
     Albums.create("Lateralus", "Tool", 2002, nu_metal.id)
     Albums.create("Temptation", "Chistopher Lawrence", 1998, trance.id)
     Albums.create("Live", "Gary Clark, Jr.", 2014, blues.id)
-    Albums.create("The Takeover Bid Round 2", "Mickey Finn", 1992, drum_n_bass.id)
+    Albums.create("New Forms", "Roni Size/Reprazent", 1998, drum_n_bass.id)
+    Albums.create("We Are Twisted!", "Various Artists", 1999, house.id)
 
 seed_database()
 print("Database seeded, now it's up to you!")

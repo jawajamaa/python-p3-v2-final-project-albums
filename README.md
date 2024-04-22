@@ -3,7 +3,6 @@
 Directory structure:
 
 ```console
-.
 ├── Pipfile (not yet)
 ├── Pipfile.lock  (not yet)
 ├── README.md

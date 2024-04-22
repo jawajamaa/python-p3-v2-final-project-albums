@@ -57,22 +57,22 @@ class Albums:
         """Create a new table to persist the attributes of new Album instances"""
         sql = """
             CREATE TABLE IF NOT EXISTS albums (
-            id INTEGER PRIMARY KEY
-            title TEXT
-            artist TEXT
-            year INTEGER
-            genre_id INTEGER
-            FOREIGN KEY (genre_id) REFERNCES
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            artist TEXT,
+            year INTEGER,
+            genre_id INTEGER,
+            FOREIGN KEY (genre_id) REFERENCES
             genres(id))
         """
-
         CURSOR.execute(sql)
         CONN.commit()
 
+    @classmethod
     def drop_table(cls):
         """Drop the table that persists Album instances """
         sql = """
-            DROP TABLE IF EXISTS employees;
+            DROP TABLE IF EXISTS albums;
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -89,3 +89,83 @@ class Albums:
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
           
+    @classmethod          
+    def create(cls, title, artist, year, genre_id):
+        """Initialize a new instance of Albums and save the object to the db"""
+        albums = cls(title, artist, year, genre_id)
+        albums.save()
+        return albums
+    
+    def update(self):
+        """Update the table row corresponding to the current instance of Albums"""
+        sql = """
+            UPDATE albums
+            SET title = ?, artist = ?, year = ?, genre_id = ?, 
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.title, self.artist, self.year, self.genre_id, self.id))
+        CONN.commit()
+
+    def delete(self):
+        """Delete the table row corresponding to the current Albums instance, delete the dictionary entry and reassign the id attribute"""
+        sql = """
+            DELETE FROM albums
+            WHERE id = ?    
+        """
+        CURSOR.execute(sql,(self.id,))
+        CONN.commit()
+
+        del type(self).all[self.id]
+        self.id = None
+
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return an Albums object with the attribute values from the table row"""
+        album = cls.all.get(row[0])
+        if album:
+            album.title = row[1]
+            album.artist = row[2]
+            album.year = row[3]
+            album.genre_id = row[4]
+        else:
+            album = cls(row[1],row[2],row[3],row[4])
+            album.id = row[0]
+            cls.all[album.id] = album
+        return album
+    
+    @classmethod
+    def get_all(cls):
+        """Return a list containing one Albums object per table row"""
+        sql = """
+            SELECT *
+            FROM albums
+        """
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        """Return Albums object corresponding to the table row using the primary key"""
+        sql = """
+            SELECT *
+            FROM albums
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_by_title(cls, title):
+        """Return Albums object corresponding to the table row using the title"""
+        sql = """
+            SELECT *
+            FROM albums
+            WHERE title is ?
+        """
+        row = CURSOR.execute(sql, (title,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+        
+    @classmethod
+    def find_by_artist(cls, artist):    
+        pass

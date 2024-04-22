@@ -5,7 +5,7 @@ class Genres:
 
     all = {}
 
-    def __init__(self, name, id=None)
+    def __init__(self, name, id=None):
         self.id = id
         self.name = name
 
@@ -13,8 +13,9 @@ class Genres:
     def name(self):
         return self._name
 
+    @name.setter
     def name(self, name):
-        if isinstance(name, str) and len(name) and not hasattr(name):
+        if isinstance(name, str) and len(name) and not hasattr(self, name):
             self._name = name
         else:
             raise ValueError(
