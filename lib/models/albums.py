@@ -13,6 +13,10 @@ class Albums:
         self.year = year
         self.genre_id = genre_id
 
+    def __repr__(self):
+        return f"{self.artist}'s album, {self.title} released in {self.year}"
+# had 'classified as {self.genre_id}' but is unnecessary...
+
     @property
     def title(self):
         return self._title

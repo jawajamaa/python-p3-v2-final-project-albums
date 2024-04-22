@@ -23,11 +23,14 @@ def main():
             print("Please choose another option")
 
 def menu():
+    print(u'\u2500'* 30)
     print("Please select an option")
-    print("'e' or 'q' Press e or q to exit the program")
-    print("'j' Press j to list all genres")
-    print("'a' Press a to list all albums")
-    print("Some pointless function")
+    print("e) Press e to exit the program")
+    print("or")
+    print("q) Press q to exit the program")
+    print("j) Press j to list all genres")
+    print("a) Press a to list all albums")
+    print(u'\u2500'* 30)
 
 if __name__ == "__main__":
     main()
