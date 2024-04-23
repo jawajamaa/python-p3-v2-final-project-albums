@@ -8,28 +8,48 @@ from helpers import (
 
 
 def main():
-    while True:
-        menu()
-        choice = input(">")
-        if choice == "e":
+    choice = ""
+    main_menu()
+    choice = input(">")
+    while choice != "q":
+        if choice == "q":
             exit_program()
-        elif choice == "q":
-            exit_program()
-        elif choice == "a":
+        if choice == "a":
             list_all_albums()
-        elif choice == "j":
+            album_menu()
+        if choice == "j":
             list_all_genres()
+            genre_menu()
         else:
-            print("Please choose another option")
+            print("Please choose one of the listed options")
 
-def menu():
+def main_menu():
+    print(u'\u2500'* 30)
+    print("""
+        Please select an option
+          
+        j   -   List all genres
+        a   -   List all albums
+        q   -   Exit the program
+          """)
+    print(u'\u2500'* 30)
+
+def album_menu():
     print(u'\u2500'* 30)
     print("Please select an option")
-    print("e) Press e to exit the program")
-    print("or")
-    print("q) Press q to exit the program")
-    print("j) Press j to list all genres")
-    print("a) Press a to list all albums")
+    print("")
+    print("This is the album menu")
+    print("b)   Back to main menu")
+    print("q)   Exit the program")
+    print(u'\u2500'* 30)
+
+def genre_menu():
+    print(u'\u2500'* 30)
+    print("Please select an option")
+    print("")
+    print("This is the genre menu")
+    print("b)   Back to main menu")
+    print("q)   Exit the program")
     print(u'\u2500'* 30)
 
 if __name__ == "__main__":
