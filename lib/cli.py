@@ -8,23 +8,29 @@ from helpers import (
 
 
 def main():
-    choice = ""
     main_menu()
+    print("Welcome to your digital guide for your tangible music collection!")
+    choice = ""
     choice = input(">")
     while choice != "q":
-        if choice == "q":
-            exit_program()
         if choice == "a":
             list_all_albums()
-            album_menu()
+            album_choice = ""
+            while album_choice != "q" or album_choice != "b": 
+                album_menu()
+                if album_choice == "d":
+                    
         if choice == "j":
             list_all_genres()
             genre_menu()
+        if choice == "q":
+            exit_program()
         else:
             print("Please choose one of the listed options")
 
 def main_menu():
     print(u'\u2500'* 30)
+    print("Main Menu")
     print("""
         Please select an option
           
@@ -36,6 +42,7 @@ def main_menu():
 
 def album_menu():
     print(u'\u2500'* 30)
+    print("Album Menu")
     print("Please select an option")
     print("")
     print("This is the album menu")
@@ -44,7 +51,10 @@ def album_menu():
     print(u'\u2500'* 30)
 
 def genre_menu():
+    genre_choice = ""
+    genre_choice = input(">")
     print(u'\u2500'* 30)
+    print("Album Menu")
     print("Please select an option")
     print("")
     print("This is the genre menu")
