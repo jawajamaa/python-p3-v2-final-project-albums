@@ -38,6 +38,13 @@ def update_genre():
     else:
         print(f'Genre {coll} was not found - please check your spelling and try again')
 
+def delete_genre():
+    name = input("Enter the name of the genre: ").capitalize()
+    if name := Genres.find_by_name(name):
+        name.delete()
+        print(f'Genre {name} deleted')
+    else:
+        print(f'Genre {name} not found - please check spelling and try again')
 
 # Albums helper functions
 def list_all_albums():
@@ -84,6 +91,14 @@ def update_album():
             print("There was an error updating the album: ", exc)
     else:
         print(f'album {coll} was not found - please check your spelling and try again')
+        
+def delete_album():
+    title = input("Enter the title of the album: ")
+    if album := Albums.find_by_title(title):
+        album.delete()
+        print(f'Genre {album} deleted')
+    else:
+        print(f'Album {album} not found - please check spelling and try again')
         
 def all_albums_from_genre():
     # all_albums = list_all_albums()

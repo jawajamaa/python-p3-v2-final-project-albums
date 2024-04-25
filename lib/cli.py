@@ -5,9 +5,11 @@ from helpers import (
     list_all_albums,
     create_album,
     update_album,
+    delete_album,
     list_all_genres,
     create_genre,
-    update_genre
+    update_genre,
+    delete_genre
 )
 
 
@@ -17,30 +19,34 @@ def main():
     choice = ""
     choice = input(">")
     while choice != "q":
+        genre_choice = ""
+        album_choice = ""
         if choice == "a":
             list_all_albums()
-            album_choice = ""
-            choice = input(">")
+            album_choice = input(">")
+            album_menu()
             while album_choice != "q" or album_choice != "b": 
-                album_menu()
                 if album_choice == "d":
                     create_album()
                 if album_choice == "e":
                     update_album()
+                if album_choice == "r":
+                    delete_album()
                 if album_choice == "b":
                     main_menu()
                 if album_choice == "q":
                     exit_program()
         if choice == "j":
             list_all_genres()
-            genre_choice = ""
-            choice = input(">")
+            genre_choice = input(">")
+            genre_menu()
             while genre_choice != "q" or genre_choice != "b":
-                genre_menu()
                 if genre_choice == "k":
                     create_genre()
-                if genre_choice == "l":
+                if genre_choice == "u":
                     update_genre()
+                if genre_choice == "l":
+                    delete_genre()
                 if genre_choice == "b":
                     main_menu()
                 if genre_choice == "q":
