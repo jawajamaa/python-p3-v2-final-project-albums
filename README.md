@@ -3,9 +3,9 @@
 Directory structure:
 
 ```console
-├── Pipfile (not yet)
-├── Pipfile.lock  (not yet)
-├── README.md
+├── Pipfile
+├── Pipfile.lock
+├── README.md (of course needs to be finished...)
 └── lib
     ├── models
     │   ├── __init__.py
