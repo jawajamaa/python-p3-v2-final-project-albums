@@ -8,6 +8,7 @@ class Genres:
     def __init__(self, name, id=None):
         self.id = id
         self.name = name
+# additional attribute if needed - characteristics of said genre; dare I say attributes of it?
 
     def __repr__(self):
         return f"Genre: {self.name}"

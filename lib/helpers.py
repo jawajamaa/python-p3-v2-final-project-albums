@@ -46,23 +46,38 @@ def list_all_albums():
         print(album)
 
 def create_album():
-    name = input("Add another music album: ")
+    title = input("Add the title of another music album: ")
+    artist = input("Add the artist for that album: ")
+    year = input("Add the year of the album's initial release: ")
+    genre = input("Add the genre from the available genres to categorize the album.  If the best one is not listed, please add the genre to the list")
     try:
-        album = Albums.create(name)
+        album = Albums.create(title, artist, year)
         print(f'Added {album}')
     except Exception as exc:
         print("Encountered an error adding album ", exc)
 
 def update_album():
-    coll = input("Enter the album's name: ").capitalize()
-    if album := Albums.find_by_name(coll):
+    coll = input("Enter the album's name: ")
+    if album := Albums.find_by_title(coll):
         try:
-            name = input("Enter the updated album name: ")
-            if len(name) == 0:
-                print(f'No new name was entered, so there is no change to make to {album}')
+            title = input("Enter the updated album title: ")
+            artist = input("Enter the updated artist name: ")
+            year = input("Enter the updated album release year: ")
+            genre = input("Enter the updated genre from the list of genres: ")
+            if len(title):
+                print(f'No new name was entered, so there is no change to make to {title} ')
+            elif len(artist):
+                print(f'No new name was entered, so there is no change to make to {artist} ')
+            elif len(str(year)):
+                print(f'No new year was entered, so there is no change to make to {album} ')
+            elif len(genre):
+                print(f'No new name was entered, so there is no change to make to {album} ')
             else:
                 print(f'Updating {album}')
-                album.name = name
+                album.title = title
+                album.artist = artist
+                album.year = year
+                album.genre = genre
             album.update()
             print(f'{album} updated')
         except Exception as exc:
