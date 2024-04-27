@@ -50,10 +50,25 @@ def delete_genre():
 # Albums helper functions
 def list_all_albums():
     albums = Album.get_all()
-    print("Album Title\t", "Artist\t", "Album Released\t", "Category\t")
-    for album in albums:    
-        print(album.title, album.artist, album.year, album.genre.name)
+    print("Album Title\t", "Artist\t", "Year\t", "Category\t")
+    for album in albums:  
+        # breakpoint()  
+        print(f'''
+            {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
+        ''')
     # reformat album
+
+def space30(num):
+    spaces = int((30 - num))
+    return(spaces*" ")
+
+def space20(num):
+    spaces = int((20 - num))
+    return(spaces*" ")
+
+def space10(num):
+    spaces = int((10 - num))
+    return(spaces*" ")
 
 def create_album():
     title = input("Add the title of another music album: ")
@@ -80,18 +95,14 @@ def update_album():
                 print(f'No new name was entered, so there is no change to make to {title} ')
             else:
                 print(f'Updating {title}')
-                print("line 82", album.title)
                 album.title = title
-                print("line 84", title)
 
             artist = input("Enter the updated artist name: ")
             if len(artist) <= 0:
                 print(f'No new or updated name was entered, so there is no change to make to {artist} ')
             else:
                 print(f'Updating {title}\'s {artist}')
-                print("line 91", album.artist)
                 album.artist = artist
-                print("line 93", artist)
 
             year = input("Enter the updated album release year: ")
             if len(str(year)) <= 0:
@@ -102,9 +113,7 @@ def update_album():
             #     print(f'The year entered needs to be 4 digits, so there is no change that can be made to {title}\'s release year ')
             else:
                 print(f'Updating {title}\'s release year of {year}')
-                print("line 104", album.year)
                 album.year = year
-                print("line 106", year)
             
             genre = input("Enter the updated genre from the list of genres: ")
             if len(genre) <= 0:
