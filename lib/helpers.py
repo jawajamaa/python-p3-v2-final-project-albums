@@ -10,9 +10,9 @@ def exit_program():
 # Genres helper functions
 def list_all_genres():
     genres = Genre.get_all()
+    print(u'\u2500'* 60)
     for genre in genres:
-        print(genre)
-# reformat print statement to be prettier and not use repr
+        print(genre.name)
 
 def create_genre():
     name = input("Add another music genre: ")
@@ -110,14 +110,8 @@ def update_album():
                 print(f'No new name was entered, so there is no change to make to {genre} ')
             else:
                 print(f'Updating {genre}')
-                print("line 113", album.genre.name)
                 genre = Genre.find_by_name(genre)
-                # album.genre = id_and_genre
-                breakpoint()
-                album = Album(year, artist, title, album.id, genre )
-                print("line 116", genre)
-                print("line 117", album.genre)
-                print("line 118", album)
+                album = Album(title, artist, year, genre, album.id )
             album.update()
             print(f'{artist}\'s {genre} album, {title} first released in {year} updated')
         except Exception as exc:

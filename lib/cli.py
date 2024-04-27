@@ -17,48 +17,9 @@ def main():
     print("Welcome to your digital guide for your tangible music collection!")
     main_menu()
     
-    choice = ""
-    choice = input(">")
-#     while choice != "q":
-#         genre_choice = ""
-#         album_choice = ""
-#         if choice == "a":
-#             list_all_albums()
-#             album_menu()
-#             album_choice = input(">")
-#             while album_choice != "q" or album_choice != "b": 
-#                 if album_choice == "d":
-#                     create_album()
-#                 if album_choice == "e":
-#                     update_album()
-#                 if album_choice == "r":
-#                     delete_album()
-# # choice b creates recursion of the main menu populating again and again... 
-#                 if album_choice == "b":
-#                     main_menu()
-#                 if album_choice == "q":
-#                     exit_program()
-#         if choice == "j":
-#             list_all_genres()
-#             genre_menu()
-#             genre_choice = input(">")
-#             while genre_choice != "q" or genre_choice != "b":
-#                 if genre_choice == "k":
-#                     create_genre()
-# # can add new genre and works but only prompt is to add another new genre and can't exit without control+c 
-#                 if genre_choice == "u":
-#                     update_genre()
-#                 if genre_choice == "l":
-#                     delete_genre()
-# # choice b creates recursion of the main menu populating again and again... 
-#                 if genre_choice == "b":
-#                     main_menu()
-#                 if genre_choice == "q":
-#                     exit_program()
-#         if choice == "q":
-#             exit_program()
-#         else:
-#             print("Please choose one of the listed options")
+    # choice = ""
+    # choice = input(">")
+
 
 def main_menu():
     while True:
