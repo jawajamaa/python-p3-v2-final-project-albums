@@ -58,11 +58,11 @@ def create_album():
     title = input("Add the title of another music album: ")
     artist = input("Add the artist for that album: ")
     year = input("Add the year of the album's initial release: ")
-    genre_name = input("Add the genre from the available genres to categorize the album.  If the best one is not listed, please add the genre to the list")
+    genre_name = input("Add the genre from the available genres to categorize the album.  If the best one is not listed, please add the genre to the list: ")
     if genre := Genre.find_by_name(genre_name):
         try:
             album = Album.create(title, artist, year, genre)
-            print(f'Added {album}')
+            print(f'Added {title}')
         except Exception as exc:
             print("Encountered an error adding album ", exc)
     else:
@@ -71,33 +71,90 @@ def create_album():
 def update_album():
     coll = input("Enter the album's title: ")
     if album := Album.find_by_title(coll):
+        print(album)
         try:
+
             title = input("Enter the updated album title: ")
-            artist = input("Enter the updated artist name: ")
-            year = input("Enter the updated album release year: ")
-            genre = input("Enter the updated genre from the list of genres: ")
-            if len(title):
-                breakpoint()
+            if len(title) <= 0:
                 print(f'No new name was entered, so there is no change to make to {title} ')
-            elif len(artist):
-                print(f'No new name was entered, so there is no change to make to {artist} ')
-            elif len(str(year)):
-                print(f'No new year was entered, so there is no change to make to {album} ')
-            elif len(genre):
-                print(f'No new name was entered, so there is no change to make to {album} ')
             else:
-                print(f'Updating {album}')
+                print(f'Updating {title}')
+                print("line 82", album.title)
                 album.title = title
+                print("line 84", title)
+
+            artist = input("Enter the updated artist name: ")
+            if len(artist) <= 0:
+                print(f'No new or updated name was entered, so there is no change to make to {artist} ')
+            else:
+                print(f'Updating {title}\'s {artist}')
+                print("line 91", album.artist)
                 album.artist = artist
+                print("line 93", artist)
+
+            year = input("Enter the updated album release year: ")
+            if len(str(year)) <= 0:
+                print(f'No new year was entered, so there is no change to make to {title} ')
+            elif len(str(year)) != 4:
+                print(f'The year entered needs to be 4 digits, so there is no change that can be made to {title}\'s release year ')
+            # elif 0 < len(str(year)) <= 3:
+            #     print(f'The year entered needs to be 4 digits, so there is no change that can be made to {title}\'s release year ')
+            else:
+                print(f'Updating {title}\'s release year of {year}')
+                print("line 104", album.year)
                 album.year = year
-                album.genre = genre
+                print("line 106", year)
+            
+            genre = input("Enter the updated genre from the list of genres: ")
+            if len(genre) <= 0:
+                print(f'No new name was entered, so there is no change to make to {genre} ')
+            else:
+                print(f'Updating {genre}')
+                print("line 113", album.genre.name)
+                genre = Genre.find_by_name(genre)
+                # album.genre = id_and_genre
+                breakpoint()
+                album = Album(year, artist, title, album.id, genre )
+                print("line 116", genre)
+                print("line 117", album.genre)
+                print("line 118", album)
             album.update()
-            print(f'{album} updated')
+            print(f'{artist}\'s {genre} album, {title} first released in {year} updated')
         except Exception as exc:
             print("There was an error updating the album: ", exc)
     else:
         print(f'album {coll} was not found - please check your spelling and try again')
         
+# def update_album():
+#     coll = input("Enter the album's title: ")
+#     if album := Album.find_by_title(coll):
+#         try:
+#             title = input("Enter the updated album title: ")
+#             artist = input("Enter the updated artist name: ")
+#             year = input("Enter the updated album release year: ")
+#             genre = input("Enter the updated genre from the list of genres: ")
+#             if len(title):
+#                 breakpoint()
+#                 print(f'No new name was entered, so there is no change to make to {title} ')
+#             elif len(artist):
+#                 print(f'No new name was entered, so there is no change to make to {artist} ')
+#             elif len(str(year)):
+#                 print(f'No new year was entered, so there is no change to make to {album} ')
+#             elif len(genre):
+#                 print(f'No new name was entered, so there is no change to make to {album} ')
+#             else:
+#                 print(f'Updating {album}')
+#                 album.title = title
+#                 album.artist = artist
+#                 album.year = year
+#                 album.genre = genre
+#             album.update()
+#             print(f'{album} updated')
+#         except Exception as exc:
+#             print("There was an error updating the album: ", exc)
+#     else:
+#         print(f'album {coll} was not found - please check your spelling and try again')
+
 def delete_album():
     title = input("Enter the title of the album: ")
     if album := Album.find_by_title(title):

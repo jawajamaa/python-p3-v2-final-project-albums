@@ -17,23 +17,45 @@ class Album:
     @property
     def id(self):
         return self._id
+    
+    # no id setter needed possibly?
 
     @property
     def title(self):
         return self._title
     
+    @title.setter
+    def title(self, title):
+        if isinstance(str, Album) and len(title):
+            self._title = title
+    
     @property
     def artist(self):
         return self._artist
     
+    @artist.setter
+    def artist(self, artist):
+        if isinstance(str, Album) and len(artist):
+            self._artist = artist
+
     @property
     def year(self):
         return self._year
     
+    @year.setter
+    def year(self, year):
+        if isinstance(int, Album) and len(str(year)) == 4:
+            self._year = year
+
     @property
     def genre(self):
         return self._genre
     
+    @genre.setter
+    def genre(self, genre):
+        if isinstance(str, Album) and len(genre) >= 4:
+            self._genre = genre
+
     @classmethod
     def create_table(cls):
         """Create a new table to persist the attributes of new Album instances"""
@@ -60,7 +82,7 @@ class Album:
         CONN.commit()
     
     def insert(self):
-        """Insert a new row with the title, artist, year and genre id of the the current Album object and update the the object id using the PK from the table.  Save the object in the local dictionary using the table row's PK as dictionary key"""
+        """Insert a new row with the title, artist, year and genre id of the the current Album object and update the the object id using the PK from the table."""
         sql = """
             INSERT INTO albums (title, artist, year, genre_id)
             VALUES (?, ?, ?, ?)
@@ -80,7 +102,7 @@ class Album:
         """Update the table row corresponding to the current instance of Albums"""
         sql = """
             UPDATE albums
-            SET title = ?, artist = ?, year = ?, genre_id = ?, 
+            SET title = ?, artist = ?, year = ?, genre_id = ? 
             WHERE id = ?
         """
         CURSOR.execute(sql, (self._title, self._artist, self._year, self._genre.id, self._id))
