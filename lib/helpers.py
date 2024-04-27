@@ -50,8 +50,9 @@ def delete_genre():
 # Albums helper functions
 def list_all_albums():
     albums = Album.get_all()
-    for album in albums:
-        print(album)
+    print("Album Title\t", "Artist\t", "Album Released\t", "Category\t")
+    for album in albums:    
+        print(album.title, album.artist, album.year, album.genre.name)
     # reformat album
 
 def create_album():
