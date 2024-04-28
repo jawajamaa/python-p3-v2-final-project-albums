@@ -96,7 +96,6 @@ class Album:
     def create(cls, title, artist, year, genre):
         """Initialize a new instance of Albums and save the object to the db"""
         album = cls(title, artist, year, genre)
-        print("line 99", genre)
         return album.insert()
     
     def update(self):

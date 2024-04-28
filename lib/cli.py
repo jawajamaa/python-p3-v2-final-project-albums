@@ -16,9 +16,6 @@ from helpers import (
 def main():
     print("Welcome to your digital guide for your tangible music collection!")
     main_menu()
-    
-    # choice = ""
-    # choice = input(">")
 
 
 def main_menu():
@@ -47,7 +44,6 @@ def main_menu():
             print("Please choose one of the listed options")
 
 
-# make album menu match genre menu
 def album_menu():
     while True:
         print(u'\u2500'* 60)

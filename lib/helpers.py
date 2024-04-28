@@ -91,15 +91,12 @@ def create_album():
 
     def create_year():
         year = input("Add the year of the album's initial release: ")
-        if type(year) != int:
-            print(type(year) != int)
-            if len(str(year)) != 4:
-                print(len(str(year)) != 4)
-                print("The year of release must be an integer 4 digits in length")
-                create_year()
+        if len(year) == 4 and year.isdigit():
+                return year
         else:
-            return year
-            # return int(year)
+            print("The year of release must be an integer 4 digits in length")
+            return create_year()
+# above function was refactored courtesy ChatGPT using isdigit() and return create_year() when I had been checking type == int and invoking create_year() recursively if invalid inputs
 
     def create_genre():
         list_all_genres()        
@@ -173,8 +170,3 @@ def delete_album():
         print(f'Genre {album} deleted')
     else:
         print(f'Album {album} not found - please check spelling and try again')
-
-def all_albums_from_genre():
-    # all_albums = list_all_albums()
-    for album in list_all_albums():
-        breakpoint()
