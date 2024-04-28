@@ -19,7 +19,7 @@ def create_genre():
     name = input("Add another music genre: ")
     try:
         genre = Genre.create(name)
-        print(f'Added {genre}')
+        print(f'Added {genre.name}')
     except Exception as exc:
         print("Encountered an error adding genre ", exc)
 
@@ -64,7 +64,7 @@ def space10(num):
 # Albums helper functions
 def list_all_albums():
     albums = Album.get_all()
-    print("Album Title\t", "Artist\t", "Year\t", "Category\t")
+    print(space20(len("Year")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
     for album in albums:   
         print(f'''
             {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
