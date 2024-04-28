@@ -1,4 +1,4 @@
-# lib/models/genres.py
+# lib/models/genre.py
 from models.__init__ import CONN, CURSOR 
 
 class Genre:

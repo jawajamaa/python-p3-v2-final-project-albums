@@ -1,6 +1,6 @@
-# lib/models/albums.py
+# lib/models/album.py
 from models.__init__ import CONN, CURSOR
-from models.genres import Genre
+from models.genre import Genre
 
 class Album:
 
@@ -96,6 +96,7 @@ class Album:
     def create(cls, title, artist, year, genre):
         """Initialize a new instance of Albums and save the object to the db"""
         album = cls(title, artist, year, genre)
+        print("line 99", genre)
         return album.insert()
     
     def update(self):

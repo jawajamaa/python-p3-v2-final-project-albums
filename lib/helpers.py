@@ -1,6 +1,6 @@
 # lib/helpers.py
-from models.genres import Genre
-from models.albums import Album
+from models.genre import Genre
+from models.album import Album
 import copy
 
 def exit_program():
@@ -98,7 +98,8 @@ def create_album():
                 print("The year of release must be an integer 4 digits in length")
                 create_year()
         else:
-                return year
+            return year
+            # return int(year)
 
     def create_genre():
         list_all_genres()        
