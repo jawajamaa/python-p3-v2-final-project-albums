@@ -72,18 +72,48 @@ def list_all_albums():
 
 
 def create_album():
-    title = input("Add the title of another music album: ")
-    artist = input("Add the artist for that album: ")
-    year = input("Add the year of the album's initial release: ")
-    genre_name = input("Add the genre from the available genres to categorize the album.  If the best one is not listed, please add the genre to the list: ")
-    if genre := Genre.find_by_name(genre_name):
-        try:
-            Album.create(title, artist, year, genre)
-            print(f'Added {title}')
-        except Exception as exc:
-            print("Encountered an error adding album ", exc)
-    else:
-        print("invalid genre {genre_name}")
+    
+    def create_title():
+        title = input("Add the title of another music album: ")
+        if len(title) < 1:
+            print("Title field must not be empty; for self-titled albums please enter the artist's name for both fields.")
+            create_title()
+        else:
+            return title
+
+    def create_artist():
+        artist = input("Add the artist for that album: ")
+        if len(artist) < 1:
+            print("Artist field must not be empty; for self-titled albums please enter the artist's name for both fields.")
+            create_artist()
+        else:
+            return artist
+
+    def create_year():
+        year = input("Add the year of the album's initial release: ")
+        if type(year) != int:
+            print(type(year) != int)
+            if len(str(year)) != 4:
+                print(len(str(year)) != 4)
+                print("The year of release must be an integer 4 digits in length")
+                create_year()
+        else:
+                return year
+
+    def create_genre():
+        list_all_genres()        
+        genre_name = input("Add the genre from the available genres to categorize the album.  If the best one is not listed, please add the genre to the list: ")
+        if genre := Genre.find_by_name(genre_name):
+            return genre
+        else:
+            print(f"invalid genre {genre_name}")
+
+    try:
+        album = Album.create(create_title(), create_artist(), create_year(), create_genre())
+        print(f'Added {album.title}')
+    except Exception as exc:
+        print("Encountered an error adding album ", exc)
+
 
 def update_album():
     coll = input("Enter the album's title: ")
