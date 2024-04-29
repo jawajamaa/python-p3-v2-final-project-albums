@@ -31,10 +31,10 @@ def update_genre():
             if len(name) == 0:
                 print(f'No new name was entered, so there is no change to make to {genre}')
             else:
-                print(f'Updating {genre}')
+                print(f'Updating {genre.name}')
                 genre = Genre(name, genre.id)
                 genre.update()
-                print(f'{genre} updated')
+                print(f'{genre.name} updated')
         except Exception as exc:
             print("There was an error updating the genre: ", exc)
     else:
@@ -152,12 +152,12 @@ def update_album():
                 print(f'No new name was entered, so there is no change to make...')
                 genre = album_dupe.genre
             else:
-                print(f'Updating {genre}')
+                print(f'Updating {genre.name}')
                 genre = Genre.find_by_name(genre)
 
             album = Album(title, artist, year, genre, album.id )
             album.update()
-            print(f'{artist}\'s {genre} album, {title} first released in {year} updated')
+            print(f'{artist}\'s album, {title} first released in {year} and classified as {genre.name} updated')
         except Exception as exc:
             print("There was an error updating the album: ", exc)
     else:
@@ -167,6 +167,6 @@ def delete_album():
     title = input("Enter the title of the album: ")
     if album := Album.find_by_title(title):
         album.delete()
-        print(f'Genre {album} deleted')
+        print(f'Album {album.title} deleted')
     else:
         print(f'Album {album} not found - please check spelling and try again')
