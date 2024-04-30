@@ -70,7 +70,7 @@ def album_menu():
         elif choice == 'd':
             delete_album()
         elif choice == 'b':
-            return
+            main_menu()
         elif choice == 'q':
             exit_program()
         else:
@@ -103,7 +103,7 @@ def genre_menu():
         elif choice == 'd':
             delete_genre()
         elif choice == 'b':
-            return
+            main_menu()
         elif choice == 'q':
             exit_program()
         else:

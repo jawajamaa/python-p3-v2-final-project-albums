@@ -5,12 +5,13 @@ from models.genre import Genre
 class Album:
 
     def __init__(self, title, artist, year, genre, id=None):
+        self.title = title
+        self.artist = artist
+        self.year = year
+        self.genre = genre
         self._id = id
-        self._title = title
-        self._artist = artist
-        self._year = year
-        self._genre = genre
 
+# comment out - for testing/debugging only
     def __repr__(self):
         return f"[Album id={self._id} artist=\"{self._artist}\" title=\"{self._title}\" year={self._year} genre={self._genre}]"
 
@@ -26,7 +27,8 @@ class Album:
     
     @title.setter
     def title(self, title):
-        if isinstance(str, Album) and len(title):
+        print("Album line 31 title setter")
+        if isinstance(self, Album) and type(title) is str and len(title) >= 1:
             self._title = title
     
     @property
@@ -35,7 +37,8 @@ class Album:
     
     @artist.setter
     def artist(self, artist):
-        if isinstance(str, Album) and len(artist):
+        print("Album line 41 artist setter")
+        if isinstance(self, Album) and type(artist) is str and len(artist) >= 1:
             self._artist = artist
 
     @property
@@ -44,7 +47,8 @@ class Album:
     
     @year.setter
     def year(self, year):
-        if isinstance(int, Album) and len(str(year)) == 4:
+        print("Album line 51 year setter")
+        if isinstance(self, Album) and type(year) is int and len(str(year)) == 4:
             self._year = year
 
     @property
@@ -53,7 +57,8 @@ class Album:
     
     @genre.setter
     def genre(self, genre):
-        if isinstance(str, Album) and len(genre) >= 4:
+        print("Album line 61 genre setter")
+        if isinstance(self, Album) and len(genre.name) >= 3:
             self._genre = genre
 
     @classmethod
@@ -87,10 +92,10 @@ class Album:
             INSERT INTO albums (title, artist, year, genre_id)
             VALUES (?, ?, ?, ?)
         """ 
-        CURSOR.execute(sql, (self._title, self._artist, self._year, self._genre.id))
+        CURSOR.execute(sql, (self.title, self.artist, self.year, self.genre.id))
         CONN.commit()
 
-        return Album(self._title, self._artist, self._year, self._genre, CURSOR.lastrowid)
+        return Album(self.title, self.artist, self.year, self.genre, CURSOR.lastrowid)
           
     @classmethod          
     def create(cls, title, artist, year, genre):

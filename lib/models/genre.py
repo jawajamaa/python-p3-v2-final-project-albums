@@ -5,7 +5,7 @@ class Genre:
 
     def __init__(self, name, id=None):
         self._id = id
-        self._name = name
+        self.name = name
 
     def __repr__(self):
         return f"[Genre id={self.id} name=\"{self._name}\"]"
@@ -17,6 +17,12 @@ class Genre:
     @property
     def name(self):
         return self._name
+    
+    @name.setter
+    def name(self, name):
+        print("Genre line 23 year setter")
+        if isinstance(self, Genre) and type(name) is str and len(name) >= 1:
+            self._name = name
 
     @classmethod
     def create_table(cls):
@@ -45,9 +51,9 @@ class Genre:
             INSERT INTO genres (name)
             VALUES (?)
         """
-        CURSOR.execute(sql, (self._name,)) 
+        CURSOR.execute(sql, (self.name,)) 
         CONN.commit()
-        return Genre(self._name, CURSOR.lastrowid)
+        return Genre(self.name, CURSOR.lastrowid)
 
     @classmethod
     def create(cls, name):
@@ -62,7 +68,7 @@ class Genre:
             SET name = ?
             WHERE id is ?
         """
-        CURSOR.execute(sql, (self._name, self._id))
+        CURSOR.execute(sql, (self.name, self.id))
         CONN.commit()
 
     def delete(self):
@@ -71,7 +77,7 @@ class Genre:
             DELETE FROM genres
             WHERE id is ?
         """
-        CURSOR.execute(sql, (self._id,))
+        CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
 
