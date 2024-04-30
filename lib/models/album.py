@@ -48,7 +48,7 @@ class Album:
     @year.setter
     def year(self, year):
         print("Album line 51 year setter")
-        if isinstance(self, Album) and type(year) is int and len(str(year)) == 4:
+        if isinstance(self, Album) and len(str(year)) == 4 and type(int(year)) is int:
             self._year = year
 
     @property
