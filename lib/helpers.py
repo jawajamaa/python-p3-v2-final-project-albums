@@ -170,3 +170,15 @@ def delete_album():
         print(f'Album {album.title} deleted')
     else:
         print(f'Album {album} not found - please check spelling and try again')
+
+def show_albums_by_genre(selected_genre):
+    albums = Album.find_by_genre(selected_genre)
+    # breakpoint()
+    print(u'\u2500'* 80)
+    print(u'\u2500'* 80)
+    print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
+    print(u'\u2500'* 80)
+    for album in albums:   
+        print(f'''
+            {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
+        ''')

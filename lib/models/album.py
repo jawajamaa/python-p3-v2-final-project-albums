@@ -130,7 +130,7 @@ class Album:
     
     @classmethod
     def get_all(cls):
-        """Return a list containing one Albums object per table row"""
+        """Return a list containing one Album object per table row"""
         sql = """
             SELECT title, artist, year, genres.name, genre_id, albums.id
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
@@ -141,7 +141,7 @@ class Album:
     
     @classmethod
     def find_by_id(cls, id):
-        """Return Albums object corresponding to the table row using the primary key"""
+        """Return Album object corresponding to the table row using the primary key"""
         sql = """
             SELECT title, artist, year, genres.name, genre_id, albums.id
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
@@ -152,7 +152,7 @@ class Album:
 
     @classmethod
     def find_by_title(cls, title):
-        """Return Albums object corresponding to the table row using the title"""
+        """Return Album object corresponding to the table row using the title"""
         sql = """
             SELECT title, artist, year, genres.name, genre_id, albums.id
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
@@ -163,7 +163,7 @@ class Album:
         
     @classmethod
     def find_by_artist(cls, artist):    
-        """Return Albums object corresponding to the table row using the artitst"""
+        """Return Album object corresponding to the table row using the artitst"""
         sql = """
             SELECT title, artist, year, genres.name, genre_id, albums.id
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
@@ -171,3 +171,15 @@ class Album:
         """
         row = CURSOR.execute(sql, (artist,)).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_by_genre(cls, genre):
+        """Return a list containing an Album object per table row"""
+        sql = """
+            SELECT title, artist, year, genres.name, genre_id, albums.id
+            FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
+            WHERE genres.name = ?
+        """
+
+        rows = CURSOR.execute(sql, (genre,)).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
