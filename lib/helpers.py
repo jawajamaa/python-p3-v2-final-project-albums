@@ -9,11 +9,12 @@ def exit_program():
 
 # Genres helper functions
 def list_all_genres():
-    genres = Genre.get_all()
-    print(f'{space20(len("Categories"))}Categories')
-    print(u'\u2500'* 60)
-    for genre in genres:
-        print(f'{space20(len(genre.name))}{genre.name}')
+    return Genre.get_all()
+    # print(u'\u2500'* 80)
+    # print(f'{space30(len("Categories"))}Categories')
+    # print("")
+    # for i, val in enumerate(Genre.get_all(), start = 1):
+    #     print(f'        {i}    -    {space10(len(val.name))}{val.name}')
 
 def create_genre():
     name = input("Add another music genre: ")
@@ -99,7 +100,7 @@ def create_album():
 # above function was refactored courtesy ChatGPT using isdigit() and return create_year() when I had been checking type == int and invoking create_year() recursively if invalid inputs
 
     def create_genre():
-        list_all_genres()        
+        # list_all_genres()  remove as display formatting is moved to cli.py after call        
         genre_name = input("Add the genre from the available genres to categorize the album.  If the best one is not listed, please add the genre to the list: ")
         if genre := Genre.find_by_name(genre_name):
             return genre
@@ -182,3 +183,36 @@ def show_albums_by_genre(selected_genre):
         print(f'''
             {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
         ''')
+
+def create_album_by_genre(selected_genre):
+
+    def create_title():
+        title = input("Add the title of another music album: ")
+        if len(title) < 1:
+            print("Title field must not be empty; for self-titled albums please enter the artist's name for both fields.")
+            create_title()
+        else:
+            return title
+
+    def create_artist():
+        artist = input("Add the artist for that album: ")
+        if len(artist) < 1:
+            print("Artist field must not be empty; for self-titled albums please enter the artist's name for both fields.")
+            create_artist()
+        else:
+            return artist
+
+    def create_year():
+        year = input("Add the year of the album's initial release: ")
+        if len(year) == 4 and year.isdigit():
+                return year
+        else:
+            print("The year of release must be an integer 4 digits in length")
+            return create_year()
+# above function was refactored courtesy ChatGPT using isdigit() and return create_year() when I had been checking type == int and invoking create_year() recursively if invalid inputs
+
+    try:
+        album = Album.create(create_title(), create_artist(), create_year(), selected_genre)
+        print(f'Added {album.title}')
+    except Exception as exc:
+        print("Encountered an error adding album ", exc)

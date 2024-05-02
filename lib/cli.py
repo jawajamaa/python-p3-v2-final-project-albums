@@ -1,5 +1,5 @@
 # lib/cli.py
-
+from models.genre import Genre
 from helpers import (
     exit_program,
     list_all_albums,
@@ -7,39 +7,44 @@ from helpers import (
     update_album,
     delete_album,
     show_albums_by_genre,
+    create_album_by_genre,
     list_all_genres,
     create_genre,
     update_genre,
-    delete_genre
+    delete_genre,
+    space30,
+    space20,
+    space10
 )
 
-
 def main():
+    print(u'\u2500'* 80)
     print("Welcome to your digital guide for your tangible music collection!")
     main_menu()
 
 
 def main_menu():
     while True:
-        print(u'\u2500'* 60)
-        print(u'\u2500'* 60)
+        print(u'\u2500'* 80)
+        print(u'\u2500'* 80)
         print("Main Menu")
         print("""
             Please select an option
             
-            g   -   Admin genres
-            a   -   Admin albums
-            s   -   Albums by genre
+            d   -   Display albums by artist
+            s   -   Show albums by genre
             q   -   Exit the program
             """)
-        print(u'\u2500'* 60)
-        print(u'\u2500'* 60)
+        print(u'\u2500'* 80)
+        print(u'\u2500'* 80)
 
         choice = input(">")
         if choice == 'g':
             genre_menu()
         elif choice == 'a':
             album_menu()
+        elif choice == 'd':
+            albums_by_artist_menu()
         elif choice == 's':
             albums_by_genre_menu()
         elif choice == 'q':
@@ -50,21 +55,84 @@ def main_menu():
 
 def albums_by_genre_menu():
     while True:
-        print(u'\u2500'* 60)
-        print(u'\u2500'* 60)
+        print(u'\u2500'* 80)
+        print(u'\u2500'* 80)
         print("Albums by Genre Menu")
+        # list_all_genres()
+        print(u'\u2500'* 80)  
+        print(f'{space10(len("Choice"))}Choose from categories')  
+        print("") 
+        for i, val in enumerate(Genre.get_all(), start = 1):  
+            print(f'        {i}    -    {space10(len(val.name))}{val. name}')
         print("""
-            1  -   Blues
-            2  -   Drum'n'Bass
-            3  -   House
-            4  -   Jazz
-            5  -   Metal
-            6  -   Nu-Metal
-            7  -   Psychedelic Soul
-            8  -   Punk
-            9  -   Rock
-            10 -   Soul-Jazz
-            11 -   Techno
+
+            b  -   Back to main menu
+            q  -   Exit the program
+            """)
+        print(u'\u2500'* 80)
+        print(u'\u2500'* 80)
+
+        choice = input(">")
+        for i, val in enumerate(Genre.get_all(), start = 1):  
+            if choice == str(i):
+                show_albums_by_genre(val.name)
+                albums_of_genre_menu(val)
+
+        if choice == 'b':
+            main_menu()
+        elif choice == 'q':
+            exit_program()
+        else:
+            print("Please choose one of the listed options")  
+
+
+def albums_of_genre_menu(selected_genre):
+    while True:
+        print(u'\u2500'* 80)
+        print(u'\u2500'* 80)
+        print("Albums of a Specific Genre Menu")
+        print(u'\u2500'* 80)  
+        print(f'{space10(len("Choice"))}Please select an option')  
+        print("""
+            Please select an option
+            
+            a   -   Add albums in genre
+            u   -   Update albums in genre
+            d   -   Delete albums in genre
+            b   -   Back to main menu
+            q   -   Exit the program
+            """)
+        choice = input(">")
+        if choice == 'a':
+            create_album_by_genre(selected_genre)
+        elif choice == 'u':
+            update_album_by_genre(selected_genre)
+        elif choice == 'd':
+            delete_album()
+        elif choice == 'b':
+            main_menu()
+        elif choice == 'q':
+            exit_program()
+        else:
+            print("Please choose one of the listed options")  
+    
+
+
+def albums_by_artist_menu():
+    while True:
+        print(u'\u2500'* 60)
+        print(u'\u2500'* 60)
+        print("Albums by Artist Menu")
+        print("""
+            1  -   Artist1
+            2  -   Artist2
+            3  -   Artist3
+            4  -   Artist4
+            5  -   Artist5
+            6  -   Artist6
+            7  -   Artist7
+            8  -   Artist8
+            9  -   Artist9
             l  -   List all Albums
             a  -   Add new Album
             u  -   Update existing Album
@@ -76,32 +144,10 @@ def albums_by_genre_menu():
         print('\u2500'* 60)
 
         choice = input(">")
-        if choice == "1" :
-            show_albums_by_genre("Blues")
-        elif choice == "2" :
-            show_albums_by_genre("Drum'n'Bass")
-        elif choice == "3" :
-            show_albums_by_genre("House")
-        elif choice == "4" :
-            show_albums_by_genre("Jazz")
-        elif choice == "5" :
-            show_albums_by_genre("Metal")
-        elif choice == "6" :
-            show_albums_by_genre("Nu-Metal")
-        elif choice == "7" :
-            show_albums_by_genre("Psychedelic Soul")
-        elif choice == "8" :
-            show_albums_by_genre("Punk")
-        elif choice == "9" :
-            show_albums_by_genre("Rock")
-        elif choice == "10" :
-            show_albums_by_genre("Soul-Jazz")
-        elif choice == "11" :
-            show_albums_by_genre("Techno")
-        elif choice == 'l':
+        if choice == 'l':
             list_all_albums()
         elif choice == 'a':
-            create_album()
+            create_album_by_genre(selected_genre)
         elif choice == 'u':
             update_album()
         elif choice == 'd':
@@ -112,6 +158,7 @@ def albums_by_genre_menu():
             exit_program()
         else:
             print("Please choose one of the listed options")  
+
 
 def album_menu():
     while True:
@@ -181,3 +228,8 @@ def genre_menu():
 
 if __name__ == "__main__":
     main()
+
+
+# removed from main_menu() at around ln 30
+            # g   -   Admin genres
+            # a   -   Admin albums

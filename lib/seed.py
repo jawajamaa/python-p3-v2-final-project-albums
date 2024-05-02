@@ -23,7 +23,7 @@ def seed_database():
     soul_jazz = Genre.create(name = "Soul-Jazz")
     techno = Genre.create(name = "Techno")
 
-# add a few more albums; mostly from dnb, jazz and rock?
+
     Album.create("Live", "Gary Clark, Jr.", 2014, blues)
     Album.create("New Forms", "Roni Size/Reprazent", 1998, drum_n_bass)
     Album.create("Funk the System", "DJ Dan", 1999, house)
@@ -43,7 +43,7 @@ def seed_database():
     Album.create("Chronicles of a Diamond", "Black Pumas", 2023, psychedelic_soul)
     Album.create("Ixnay on the Hombre", "The Offspring", 1997, punk)
     Album.create("My Sound (1993 - 2004)", "Dillinja", 2004, drum_n_bass)
-    # Album.create("Temptation", "Chistopher Lawrence", 1998, trance)
+
 
 seed_database()
 print("Database seeded, now it's up to you!")

@@ -20,7 +20,7 @@ class Genre:
     
     @name.setter
     def name(self, name):
-        print("Genre line 23 year setter")
+        # print("Genre line 23 year setter")
         if isinstance(self, Genre) and type(name) is str and len(name) >= 1:
             self._name = name
 

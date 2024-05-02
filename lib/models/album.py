@@ -27,7 +27,6 @@ class Album:
     
     @title.setter
     def title(self, title):
-        print("Album line 31 title setter")
         if isinstance(self, Album) and type(title) is str and len(title) >= 1:
             self._title = title
     
@@ -37,7 +36,6 @@ class Album:
     
     @artist.setter
     def artist(self, artist):
-        print("Album line 41 artist setter")
         if isinstance(self, Album) and type(artist) is str and len(artist) >= 1:
             self._artist = artist
 
@@ -47,7 +45,6 @@ class Album:
     
     @year.setter
     def year(self, year):
-        print("Album line 51 year setter")
         if isinstance(self, Album) and len(str(year)) == 4 and type(int(year)) is int:
             self._year = year
 
@@ -57,7 +54,6 @@ class Album:
     
     @genre.setter
     def genre(self, genre):
-        print("Album line 61 genre setter")
         if isinstance(self, Album) and len(genre.name) >= 3:
             self._genre = genre
 
