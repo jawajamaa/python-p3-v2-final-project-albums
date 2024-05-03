@@ -9,8 +9,7 @@ from helpers import (
     show_albums_by_genre,
     create_album_by_genre,
     update_album_by_genre,
-    # delete_album_by_genre,
-    # show_selected_album,
+    delete_album_by_genre,
     list_all_genres,
     create_genre,
     update_genre,
@@ -61,7 +60,6 @@ def albums_by_genre_menu():
         print(u'\u2500'* 80)
         print(u'\u2500'* 80)
         print("Albums by Genre Menu")
-        # list_all_genres()
         print(u'\u2500'* 80)  
         print(f'{space10(len("Choice"))}Choose from categories')  
         print("") 
@@ -78,8 +76,6 @@ def albums_by_genre_menu():
         choice = input(">")
         for i, val in enumerate(Genre.get_all(), start = 1):  
             if choice == str(i):
-                # show_albums_by_genre(val.name)
-                # breakpoint()
                 albums_of_genre_menu(val, show_albums_by_genre(val.name))
 
         if choice == 'b':
@@ -103,20 +99,18 @@ def albums_of_genre_menu(selected_genre, albums):
                 {i}{" - "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
             ''')  
         print("""
-            Please select an option
+            Please select an option from below
+              or a number of an album from above
             
             a   -   Add albums in genre
             b   -   Back to main menu
             q   -   Exit the program
             """)
         choice = input(">")
-        # breakpoint()
         for i, album in enumerate(albums, start = 1):   
             if choice == str(i):
-                # breakpoint()
                 selected_album_menu(album)
-                # call above menu where there will be 2 choices - update, delete
-                # update_album_by_genre(album)
+
         if choice == 'a':
             create_album_by_genre(selected_genre)
         elif choice == 'b':
@@ -152,7 +146,7 @@ def selected_album_menu(album):
         if choice == 'u':
             update_album_by_genre(album)
         elif choice == 'd':
-            pass
+            delete_album_by_genre(album)
         elif choice == 'b':
             main_menu()
         elif choice == 'q':
