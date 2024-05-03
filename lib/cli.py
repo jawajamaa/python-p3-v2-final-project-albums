@@ -158,18 +158,13 @@ def albums_by_artist_menu():
     while True:
         print(u'\u2500'* 60)
         print(u'\u2500'* 60)
-        print("Albums by Artist Menu")
+        print("Artist Menu")
+        print(space20(len("Artist")),"Artists")
+        all_albums = list_all_albums()
+        for i, album in enumerate(all_albums, start = 1):
+            print(f'{i}{"   -   "}{album.artist}')
+            # make list comp to also drop any dupe artists?
         print("""
-            1  -   Artist1
-            2  -   Artist2
-            3  -   Artist3
-            4  -   Artist4
-            5  -   Artist5
-            6  -   Artist6
-            7  -   Artist7
-            8  -   Artist8
-            9  -   Artist9
-            l  -   List all Albums
             a  -   Add new Album
             u  -   Update existing Album
             d  -   Delete existing Album
@@ -180,10 +175,15 @@ def albums_by_artist_menu():
         print('\u2500'* 60)
 
         choice = input(">")
+
+        for i, album in enumerate(all_albums, start = 1):
+            if choice == int(i):
+                breakpoint()
         if choice == 'l':
             list_all_albums()
         elif choice == 'a':
-            create_album_by_genre(selected_genre)
+            pass
+            # create_album_by_artist()? not created yet
         elif choice == 'u':
             update_album()
         elif choice == 'd':
@@ -213,8 +213,15 @@ def album_menu():
         print('\u2500'* 60)
 
         choice = input(">")
+
         if choice == 'l':
-            list_all_albums()
+            albums = list_all_albums()
+
+            print(space20(len("Year")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
+            for i, album in enumerate(albums, start=1):   
+                print(f'''
+                    {i}{""    -   ""}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
+                ''')
         elif choice == 'a':
             create_album()
         elif choice == 'u':
