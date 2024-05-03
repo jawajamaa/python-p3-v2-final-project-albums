@@ -10,6 +10,7 @@ def exit_program():
 # Genres helper functions
 def list_all_genres():
     return Genre.get_all()
+# below iteration is now done in cli.py
     # print(u'\u2500'* 80)
     # print(f'{space30(len("Categories"))}Categories')
     # print("")
@@ -173,16 +174,34 @@ def delete_album():
         print(f'Album {album} not found - please check spelling and try again')
 
 def show_albums_by_genre(selected_genre):
-    albums = Album.find_by_genre(selected_genre)
-    # breakpoint()
-    print(u'\u2500'* 80)
-    print(u'\u2500'* 80)
-    print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
-    print(u'\u2500'* 80)
-    for album in albums:   
-        print(f'''
-            {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
-        ''')
+    return Album.find_by_genre(selected_genre)
+
+    # albums = Album.find_by_genre(selected_genre)
+    # print(u'\u2500'* 80)
+    # print(u'\u2500'* 80)
+    # print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
+    # print(u'\u2500'* 80)
+    # for i, album in enumerate(albums, start = 1):   
+    #     print(f'''
+    #         {i}{" - "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
+    #     ''')
+
+# def show_albums_by_genre(selected_genre):
+#     albums = Album.find_by_genre(selected_genre)
+#     # breakpoint()
+#     print(u'\u2500'* 80)
+#     print(u'\u2500'* 80)
+#     print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
+#     print(u'\u2500'* 80)
+#     for album in albums:   
+#         print(f'''
+#             {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
+#         ''')
+
+# def show_selected_album(album):
+#     breakpoint() unnecessary func like tv on honeymoon?
+#     return Album.find_by_title(album.title)
+
 
 def create_album_by_genre(selected_genre):
 
@@ -216,3 +235,54 @@ def create_album_by_genre(selected_genre):
         print(f'Added {album.title}')
     except Exception as exc:
         print("Encountered an error adding album ", exc)
+
+def update_album_by_genre(album):
+        album_dupe = copy.deepcopy(album)
+        # breakpoint()
+        # make deep copy of retrieved album and use that information for the cases where the attribute (ie: artist, title, year etc.) doesn't need to be updated
+        try:
+        
+            title = input("Enter the updated album title: ")
+            if len(title) <= 0:
+                print(f'No new name was entered, so there is no change to make...')
+                title = album_dupe.title
+            else:
+                print(f'Updating {title}')
+                album.title = title
+
+            artist = input("Enter the updated artist name: ")
+            if len(artist) <= 0:
+                print(f'No new or updated name was entered, so there is no change to make...')
+                artist = album_dupe.artist
+            else:
+                print(f'Updating {title}\'s {artist}')
+                album.artist = artist
+
+            year = input("Enter the updated album release year: ")
+            if len(str(year)) <= 0:
+                print(f'No new year was entered, so there is no change to make... ')
+                year = album_dupe.year
+            elif len(str(year)) != 4:
+                print(f'The year entered needs to be 4 digits, so there is no change that can be made to the album\'s release year ')
+                year = album_dupe.year
+            else:
+                print(f'Updating {title}\'s release year of {year}')
+                album.year = year
+            
+            # genre = input("Enter the updated genre from the list of genres: ")
+            # if len(genre) <= 0:
+            #     print(f'No new name was entered, so there is no change to make...')
+            #     genre = album_dupe.genre
+            # else:
+            #     print(f'Updating {genre.name}')
+            #     genre = Genre.find_by_name(genre)
+
+            updated_album = Album(title, artist, year, album.genre, album.id )
+            updated_album.update()
+            print(f'{artist}\'s album, {title} first released in {year} and classified as {album.name} updated')
+        except Exception as exc:
+            print("There was an error updating the album: ", exc)
+
+
+    # def delete_album_by_genre():
+    #     pass
