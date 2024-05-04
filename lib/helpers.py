@@ -78,7 +78,7 @@ def list_all_genres_of_albums():
     return Album.genres()
 
 def create_album(artist = None):
-    breakpoint()
+
     def create_title():
         title = input("Add the title of another music album: ")
         if len(title) < 1:
@@ -164,7 +164,7 @@ def update_album():
 
             album = Album(title, artist, year, genre, album.id )
             album.update()
-            print(f'{artist}\'s album, {title} first released in {year} and classified as {genre} updated')
+            print(f'{artist}\'s album, {title} first released in {year} and classified as {genre.name} updated')
         except Exception as exc:
             print("There was an error updating the album: ", exc)
     else:
@@ -180,16 +180,6 @@ def delete_album():
 
 def show_albums_by_genre(selected_genre):
     return Album.find_by_genre(selected_genre)
-
-    # albums = Album.find_by_genre(selected_genre)
-    # print(u'\u2500'* 80)
-    # print(u'\u2500'* 80)
-    # print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
-    # print(u'\u2500'* 80)
-    # for i, album in enumerate(albums, start = 1):   
-    #     print(f'''
-    #         {i}{" - "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
-    #     ''')
 
 def list_all_albums_by_artist(selected_artist):
     return Album.find_by_artist(selected_artist)
