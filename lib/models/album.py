@@ -165,8 +165,8 @@ class Album:
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
             WHERE artist = ?
         """
-        row = CURSOR.execute(sql, (artist,)).fetchone()
-        return cls.instance_from_db(row) if row else None
+        rows = CURSOR.execute(sql, (artist,)).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
 
     # @classmethod
     # def find_by_artist(cls, artist):    

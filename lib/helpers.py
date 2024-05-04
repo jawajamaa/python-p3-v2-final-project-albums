@@ -77,8 +77,8 @@ def list_all_albums():
 def list_all_genres_of_albums():
     return Album.genres()
 
-def create_album():
-    
+def create_album(artist = None):
+    breakpoint()
     def create_title():
         title = input("Add the title of another music album: ")
         if len(title) < 1:
@@ -87,13 +87,14 @@ def create_album():
         else:
             return title
 
-    def create_artist():
-        artist = input("Add the artist for that album: ")
-        if len(artist) < 1:
-            print("Artist field must not be empty; for self-titled albums please enter the artist's name for both fields.")
-            create_artist()
-        else:
-            return artist
+    def create_artist(artist = None):
+        if artist == None:
+            artist = input("Add the artist for that album: ")
+            if len(artist) < 1:
+                print("Artist field must not be empty; for self-titled albums please enter the artist's name for both fields.")
+                create_artist()
+
+        return artist
 
     def create_year():
         year = input("Add the year of the album's initial release: ")
@@ -113,7 +114,7 @@ def create_album():
             print(f"invalid genre {genre_name}")
 
     try:
-        album = Album.create(create_title(), create_artist(), create_year(), create_genre())
+        album = Album.create(create_title(), create_artist(artist), create_year(), create_genre())
         print(f'Added {album.title}')
     except Exception as exc:
         print("Encountered an error adding album ", exc)
@@ -163,7 +164,7 @@ def update_album():
 
             album = Album(title, artist, year, genre, album.id )
             album.update()
-            print(f'{artist}\'s album, {title} first released in {year} and classified as {genre.name} updated')
+            print(f'{artist}\'s album, {title} first released in {year} and classified as {genre} updated')
         except Exception as exc:
             print("There was an error updating the album: ", exc)
     else:
@@ -190,8 +191,7 @@ def show_albums_by_genre(selected_genre):
     #         {i}{" - "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
     #     ''')
 
-def show_albums_by_artist(selected_artist):
-    breakpoint()
+def list_all_albums_by_artist(selected_artist):
     return Album.find_by_artist(selected_artist)
 
 def create_album_by_genre(selected_genre):
@@ -260,7 +260,7 @@ def update_album_by_genre(album):
 
             updated_album = Album(title, artist, year, album.genre, album.id )
             updated_album.update()
-            print(f'{artist}\'s album, {title} first released in {year} and classified as {album.name} updated')
+            print(f'{artist}\'s album, {title} first released in {year} and classified as {album.genre.name} has been updated')
         except Exception as exc:
             print("There was an error updating the album: ", exc)
 

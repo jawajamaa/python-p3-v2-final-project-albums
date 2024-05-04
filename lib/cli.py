@@ -6,7 +6,7 @@ from helpers import (
     create_album,
     update_album,
     delete_album,
-    show_albums_by_artist,
+    list_all_albums_by_artist,
     show_albums_by_genre,
     create_album_by_genre,
     update_album_by_genre,
@@ -47,7 +47,7 @@ def main_menu():
         elif choice == 'a':
             album_menu()
         elif choice == 'd':
-            albums_by_artist_menu()
+            list_all_artists_menu()
         elif choice == 's':
             albums_by_genre_menu()
         elif choice == 'q':
@@ -123,7 +123,6 @@ def albums_of_genre_menu(selected_genre, albums):
     
 def selected_album_menu(album):
     while True:
-        # breakpoint()
         print(u'\u2500'* 80)
         print(u'\u2500'* 80)
         print("Selected Album Menu")
@@ -155,21 +154,22 @@ def selected_album_menu(album):
         else:
             print("Please choose one of the listed options") 
 
-def albums_by_artist_menu():
+def list_all_artists_menu():
     while True:
         print(u'\u2500'* 60)
         print(u'\u2500'* 60)
-        print("Artist Menu")
+        print("All Artists Menu")
         print(space20(len("Artist")),"Artists")
         all_albums = list_all_albums()
         all_artists = sorted(set(album.artist for album in all_albums if album.artist))
 
         for i, artist in enumerate(all_artists, start = 1):
-            # breakpoint()
             print(f'{i}{"   -   "}{artist}')
 
         print("""
+              Please select an option from below or an artist from the list
 
+            l  -   List all Albums  
             b  -   Back to main menu
             q  -   Exit the program
             """)
@@ -180,16 +180,65 @@ def albums_by_artist_menu():
 
         for i, artist in enumerate(all_artists, start = 1):
             if choice == str(i):
-                show_albums_by_artist(artist)
-                breakpoint()
-        # if choice == 'l':  maybe use as a user may want to list all albums from here?
-        #     list_all_albums()
-        if choice == 'b':
+                show_albums_by_artist_menu(list_all_albums_by_artist(artist))
+
+        if choice == 'l':
+            albums = list_all_albums()
+
+            print(space20(len("Year")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
+            for i, album in enumerate(albums, start=1):   
+                print(f'''
+                    {i}{"    -   "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
+                ''')
+        elif choice == 'b':
             main_menu()
         elif choice == 'q':
             exit_program()
         else:
             print("Please choose one of the listed options")  
+
+# add (), all_albums) to below params to access albums of specified artist?  shouldn't need to...
+def show_albums_by_artist_menu(albums_of_artist):
+    while True:
+        # breakpoint()
+        print(u'\u2500'* 80)
+        print(u'\u2500'* 80)
+        print("Selected Artists's Albums Menu")
+        print(u'\u2500'* 80) 
+        print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
+        print(u'\u2500'* 80)
+        for i, album in enumerate(albums_of_artist, start = 1):
+            # breakpoint()
+            print(f'''
+                {i}{"   -   "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
+            ''')  
+        print("""
+            Please select an option or choose an album to modify
+            
+            a   -   Add an album by current artist
+            b   -   Back to previous menu
+            m   -   Back to main menu
+            q   -   Exit the program
+            """)
+        
+        choice = input(">")
+
+        for i, album in enumerate(albums_of_artist, start = 1):
+            if choice == str(i):
+                selected_album_menu(album)
+
+        if choice == 'a':
+            # breakpoint()
+            artist = albums_of_artist[0].artist
+            create_album(artist)
+        elif choice == 'b':
+            list_all_artists_menu()
+        elif choice == 'm':
+            main_menu()
+        elif choice == 'q':
+            exit_program()
+        else:
+            print("Please choose one of the listed options") 
 
 
 def album_menu():
@@ -216,7 +265,7 @@ def album_menu():
             print(space20(len("Year")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
             for i, album in enumerate(albums, start=1):   
                 print(f'''
-                    {i}{""    -   ""}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
+                    {i}{"    -   "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
                 ''')
         elif choice == 'a':
             create_album()
