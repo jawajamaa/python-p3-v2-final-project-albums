@@ -74,6 +74,8 @@ def list_all_albums():
     #         {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
     #     ''')
 
+def list_all_genres_of_albums():
+    return Album.genres()
 
 def create_album():
     
@@ -187,6 +189,10 @@ def show_albums_by_genre(selected_genre):
     #     print(f'''
     #         {i}{" - "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
     #     ''')
+
+def show_albums_by_artist(selected_artist):
+    breakpoint()
+    return Album.find_by_artist(selected_artist)
 
 def create_album_by_genre(selected_genre):
 

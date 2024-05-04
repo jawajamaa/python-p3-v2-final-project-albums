@@ -159,7 +159,7 @@ class Album:
         
     @classmethod
     def find_by_artist(cls, artist):    
-        """Return Album object corresponding to the table row using the artitst"""
+        """Return Album object corresponding to the table row using the artist"""
         sql = """
             SELECT title, artist, year, genres.name, genre_id, albums.id
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
@@ -168,6 +168,17 @@ class Album:
         row = CURSOR.execute(sql, (artist,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
+    # @classmethod
+    # def find_by_artist(cls, artist):    
+    #     """Return Album object corresponding to the table row using the artist"""
+    #     sql = """
+    #         SELECT title, artist, year, genres.name, genre_id, albums.id
+    #         FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
+    #         WHERE artist = ?
+    #     """
+    #     row = CURSOR.execute(sql, (artist,)).fetchone()
+    #     return cls.instance_from_db(row) if row else None
+    
     @classmethod
     def find_by_genre(cls, genre):
         """Return a list containing an Album object per table row"""
@@ -178,4 +189,27 @@ class Album:
         """
 
         rows = CURSOR.execute(sql, (genre,)).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+
+    @classmethod
+    def genres(cls):
+        """Return a list containing a genre object per table row"""
+        sql = """
+            SELECT DISTINCT albums.genre_id, genres.name
+            FROM albums, genres
+            WHERE albums.genre_id = genres.id; 
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+
+    @classmethod
+    def all_artists(cls):
+        """Return a list containing a unique artist name"""
+        sql = """
+            SELECT DISTINCT artist
+            FROM albums;
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]

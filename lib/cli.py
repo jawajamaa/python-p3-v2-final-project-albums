@@ -6,6 +6,7 @@ from helpers import (
     create_album,
     update_album,
     delete_album,
+    show_albums_by_artist,
     show_albums_by_genre,
     create_album_by_genre,
     update_album_by_genre,
@@ -33,7 +34,7 @@ def main_menu():
         print("""
             Please select an option
             
-            d   -   Display albums by artist
+            d   -   Display all artists
             s   -   Show albums by genre
             q   -   Exit the program
             """)
@@ -161,13 +162,14 @@ def albums_by_artist_menu():
         print("Artist Menu")
         print(space20(len("Artist")),"Artists")
         all_albums = list_all_albums()
-        for i, album in enumerate(all_albums, start = 1):
-            print(f'{i}{"   -   "}{album.artist}')
-            # make list comp to also drop any dupe artists?
+        all_artists = sorted(set(album.artist for album in all_albums if album.artist))
+
+        for i, artist in enumerate(all_artists, start = 1):
+            # breakpoint()
+            print(f'{i}{"   -   "}{artist}')
+
         print("""
-            a  -   Add new Album
-            u  -   Update existing Album
-            d  -   Delete existing Album
+
             b  -   Back to main menu
             q  -   Exit the program
             """)
@@ -176,19 +178,13 @@ def albums_by_artist_menu():
 
         choice = input(">")
 
-        for i, album in enumerate(all_albums, start = 1):
-            if choice == int(i):
+        for i, artist in enumerate(all_artists, start = 1):
+            if choice == str(i):
+                show_albums_by_artist(artist)
                 breakpoint()
-        if choice == 'l':
-            list_all_albums()
-        elif choice == 'a':
-            pass
-            # create_album_by_artist()? not created yet
-        elif choice == 'u':
-            update_album()
-        elif choice == 'd':
-            delete_album()
-        elif choice == 'b':
+        # if choice == 'l':  maybe use as a user may want to list all albums from here?
+        #     list_all_albums()
+        if choice == 'b':
             main_menu()
         elif choice == 'q':
             exit_program()
