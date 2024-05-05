@@ -10,12 +10,6 @@ def exit_program():
 # Genres helper functions
 def list_all_genres():
     return Genre.get_all()
-# below iteration is now done in cli.py
-    # print(u'\u2500'* 80)
-    # print(f'{space30(len("Categories"))}Categories')
-    # print("")
-    # for i, val in enumerate(Genre.get_all(), start = 1):
-    #     print(f'        {i}    -    {space10(len(val.name))}{val.name}')
 
 def create_genre():
     name = input("Add another music genre: ")
@@ -50,6 +44,14 @@ def delete_genre():
     else:
         print(f'Genre {name} not found - please check spelling and try again')
 
+# formatting in cli - blank line for readability
+def final_frontier():
+    print("")
+
+# formatting in cli - horizontal line for readability
+def line():
+    print(u'\u2500'* 100)
+
 # formatting in cli - add spaces
 def space30(num):
     spaces = int((30 - num))
@@ -66,13 +68,6 @@ def space10(num):
 # Albums helper functions
 def list_all_albums():
     return Album.get_all()
-
-    # albums = Album.get_all()
-    # print(space20(len("Year")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
-    # for album in albums:   
-    #     print(f'''
-    #         {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}{space10(len(album.genre.name))}
-    #     ''')
 
 def list_all_genres_of_albums():
     return Album.genres()
@@ -106,12 +101,18 @@ def create_album(artist = None):
 # above function was refactored courtesy ChatGPT using isdigit() and return create_year() when I had been checking type == int and invoking create_year() recursively if invalid inputs
 
     def create_genre():
-        # list_all_genres()  remove as display formatting is moved to cli.py after call        
-        genre_name = input("Add the genre from the available genres to categorize the album.  If the best one is not listed, please add the genre to the list: ")
+        from cli import list_of_genres
+        list_of_genres()
+        choice = input(">")
+        
+        for i, val in enumerate(Genre.get_all(), start = 1):  
+            if choice == str(i):
+                genre_name = val.name
+    
         if genre := Genre.find_by_name(genre_name):
             return genre
         else:
-            print(f"invalid genre {genre_name}")
+            print(f"My apologies, {genre_name} is an invalid genre")
 
     try:
         album = Album.create(create_title(), create_artist(artist), create_year(), create_genre())

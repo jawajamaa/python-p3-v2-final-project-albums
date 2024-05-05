@@ -17,19 +17,21 @@ from helpers import (
     delete_genre,
     space30,
     space20,
-    space10
+    space10,
+    line,
+    final_frontier
 )
 
 def main():
-    print(u'\u2500'* 80)
+    line()
     print("Welcome to your digital guide for your tangible music collection!")
     main_menu()
 
 
 def main_menu():
     while True:
-        print(u'\u2500'* 80)
-        print(u'\u2500'* 80)
+        line()
+        line()
         print("Main Menu")
         print("""
             Please select an option
@@ -38,8 +40,8 @@ def main_menu():
             s   -   Show albums by genre
             q   -   Exit the program
             """)
-        print(u'\u2500'* 80)
-        print(u'\u2500'* 80)
+        line()
+        line()
 
         choice = input(">")
         if choice == 'g':
@@ -55,7 +57,7 @@ def main_menu():
         else:
             print("Please choose one of the listed options")
 
-# below is to refactor listing genres out so it can be called from helpers line 109 and below line 88?
+# below is to refactor listing genres out so it can be called from helpers line 109 and below line 88
 def list_of_genres():
     print(f'{space10(len("Choice"))}Choose from categories')  
     print("") 
@@ -65,26 +67,26 @@ def list_of_genres():
         m  -   Back to main menu
         q  -   Exit the program
         """)
-    print(u'\u2500'* 80)
-    print(u'\u2500'* 80)
-    choice = input(">")
-    for i, val in enumerate(Genre.get_all(), start = 1):  
-        if choice == str(i):
-            albums_of_genre_menu(val, show_albums_by_genre(val.name))
-    if choice == 'm':
-        main_menu()
-    elif choice == 'q':
-        exit_program()
-    else:
-        print("Please choose one of the listed options")  
+    line()
+    line()
+    # choice = input(">")
+    # for i, val in enumerate(Genre.get_all(), start = 1):  
+    #     if choice == str(i):
+    #         albums_of_genre_menu(val, show_albums_by_genre(val.name))
+    # if choice == 'm':
+    #     main_menu()
+    # elif choice == 'q':
+    #     exit_program()
+    # else:
+    #     print("Please choose one of the listed options")  
  
 
 def albums_by_genre_menu():
     while True:
-        print(u'\u2500'* 80)
-        print(u'\u2500'* 80)
+        line()
+        line()
         print("Albums by Genre Menu")
-        print(u'\u2500'* 80) 
+        line() 
         list_of_genres() 
         # print(f'{space10(len("Choice"))}Choose from categories')  
         # print("") 
@@ -98,27 +100,27 @@ def albums_by_genre_menu():
         # print(u'\u2500'* 80)
         # print(u'\u2500'* 80)
 
-        # choice = input(">")
-        # for i, val in enumerate(Genre.get_all(), start = 1):  
-        #     if choice == str(i):
-        #         albums_of_genre_menu(val, show_albums_by_genre(val.name))
+        choice = input(">")
+        for i, val in enumerate(Genre.get_all(), start = 1):  
+            if choice == str(i):
+                albums_of_genre_menu(val, show_albums_by_genre(val.name))
 
-        # if choice == 'm':
-        #     main_menu()
-        # elif choice == 'q':
-        #     exit_program()
-        # else:
-        #     print("Please choose one of the listed options")  
+        if choice == 'm':
+            main_menu()
+        elif choice == 'q':
+            exit_program()
+        else:
+            print("Please choose one of the listed options")  
 
-
+#  add delete album option
 def albums_of_genre_menu(selected_genre, albums):
     while True:
-        print(u'\u2500'* 80)
-        print(u'\u2500'* 80)
+        line()
+        line()
         print("Albums of a Specific Genre Menu")
-        print(u'\u2500'* 80) 
-        print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
-        print(u'\u2500'* 80)
+        line() 
+        print(space30(len("Year")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
+        line()
         if len(albums):
             for i, album in enumerate(albums, start = 1):   
                 print(f'''
@@ -142,6 +144,9 @@ def albums_of_genre_menu(selected_genre, albums):
 
         if choice == 'a':
             create_album_by_genre(selected_genre)
+        elif choice == 'd':
+            pass
+        #  add delete album option
         elif choice == 'm':
             main_menu()
         elif choice == 'b':
@@ -154,12 +159,12 @@ def albums_of_genre_menu(selected_genre, albums):
 
 def selected_album_menu(album):
     while True:
-        print(u'\u2500'* 80)
-        print(u'\u2500'* 80)
+        line()
+        line()
         print("Selected Album Menu")
-        print(u'\u2500'* 80) 
+        line() 
         print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
-        print(u'\u2500'* 80)
+        line()
    
         print(f'''
                 {album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
@@ -188,9 +193,10 @@ def selected_album_menu(album):
 
 def list_all_artists_menu():
     while True:
-        print(u'\u2500'* 60)
-        print(u'\u2500'* 60)
+        line()
+        line()
         print("All Artists Menu")
+        final_frontier()
         print(space20(len("Artist")),"Artists")
         all_albums = list_all_albums()
         all_artists = sorted(set(album.artist for album in all_albums if album.artist))
@@ -205,8 +211,8 @@ def list_all_artists_menu():
             m  -   Back to main menu
             q  -   Exit the program
             """)
-        print('\u2500'* 60)
-        print('\u2500'* 60)
+        line()
+        line()
 
         choice = input(">")
 
@@ -232,15 +238,13 @@ def list_all_artists_menu():
 
 def show_albums_by_artist_menu(albums_of_artist):
     while True:
-        # breakpoint()
-        print(u'\u2500'* 80)
-        print(u'\u2500'* 80)
+        line()
+        line()
         print("Selected Artists's Albums Menu")
-        print(u'\u2500'* 80) 
-        print(space20(len("Artist")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space10(len("Year")), "Category",space10(len("Category")))
-        print(u'\u2500'* 80)
+        line() 
+        print(space30(len("Year")),"Album Title",space30(len("Album Title")),"Artist",space10(len("Artist")), "Year",space20(len("Year")), "Category",space10(len("Category")))
+        line()
         for i, album in enumerate(albums_of_artist, start = 1):
-            # breakpoint()
             print(f'''
                 {i}{"   -   "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
             ''')  
@@ -274,8 +278,8 @@ def show_albums_by_artist_menu(albums_of_artist):
 
 def album_menu():
     while True:
-        print(u'\u2500'* 60)
-        print(u'\u2500'* 60)
+        line()
+        line()
         print("Album Menu")
         print("""
             l  -   List all Albums
@@ -285,8 +289,8 @@ def album_menu():
             m  -   Back to main menu
             q  -   Exit the program
             """)
-        print('\u2500'* 60)
-        print('\u2500'* 60)
+        line()
+        line()
 
         choice = input(">")
 
@@ -314,8 +318,8 @@ def album_menu():
 
 def genre_menu():
     while True:
-        print(u'\u2500'* 60)
-        print(u'\u2500'* 60)
+        line()
+        line()
         print("Genre Menu")
         print("""
             l  -   List all genres
@@ -325,8 +329,8 @@ def genre_menu():
             m  -   Back to main menu
             q  -   Exit the program
             """)
-        print('\u2500'* 60)
-        print('\u2500'* 60)
+        line()
+        line()
 
         choice = input(">")
         if choice == 'l':
