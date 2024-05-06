@@ -215,8 +215,10 @@ def create_album_by_genre(selected_genre):
     try:
         album = Album.create(create_title(), create_artist(), create_year(), selected_genre)
         print(f'Added {album.title}')
+        return album
     except Exception as exc:
         print("Encountered an error adding album ", exc)
+        return None
 
 def update_album_by_genre(album):
         album_dupe = copy.deepcopy(album)
