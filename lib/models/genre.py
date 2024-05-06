@@ -8,8 +8,8 @@ class Genre:
         self.name = name
     
     # comment out after debugging as it is only used for that...
-    def __repr__(self):
-        return f'[genre.id = {self._id} genre.name = \"{self._name}\"]'
+    # def __repr__(self):
+    #     return f'[genre.id = {self._id} genre.name = \"{self._name}\"]'
     
     @property
     def id(self):

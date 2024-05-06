@@ -116,8 +116,6 @@ def albums_by_genre_menu():
 
         if choice == 'a':
             create_genre()
-        # elif choice == 'u':
-        #     update_genre()
         elif choice == 'm':
             main_menu()
         elif choice == 'q':

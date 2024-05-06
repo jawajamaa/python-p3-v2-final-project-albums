@@ -12,8 +12,8 @@ class Album:
         self._id = id
 
 # comment out after debugging as it is only used for that...
-    def __repr__(self):
-        return f'[Album id={self._id} artist=\"{self._artist}\" title=\"{self._title}\" year=\"{self._year}\" genre={self._genre}]'
+    # def __repr__(self):
+    #     return f'[Album id={self._id} artist=\"{self._artist}\" title=\"{self._title}\" year=\"{self._year}\" genre={self._genre}]'
 
     @property
     def id(self):
