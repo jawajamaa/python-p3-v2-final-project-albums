@@ -117,9 +117,11 @@ def create_album(artist = None):
     try:
         album = Album.create(create_title(), create_artist(artist), create_year(), create_genre())
         print(f'Added {album.title}')
+        return album
+    
     except Exception as exc:
         print("Encountered an error adding album ", exc)
-
+        return None
 
 def update_album():
     coll = input("Enter the album's title: ")
@@ -216,6 +218,7 @@ def create_album_by_genre(selected_genre):
         album = Album.create(create_title(), create_artist(), create_year(), selected_genre)
         print(f'Added {album.title}')
         return album
+    
     except Exception as exc:
         print("Encountered an error adding album ", exc)
         return None

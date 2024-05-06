@@ -6,9 +6,6 @@ class Genre:
     def __init__(self, name, id=None):
         self._id = id
         self.name = name
-
-    def __repr__(self):
-        return f"[Genre id={self.id} name=\"{self._name}\"]"
     
     @property
     def id(self):

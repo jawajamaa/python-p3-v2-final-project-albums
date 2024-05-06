@@ -263,7 +263,10 @@ def show_albums_by_artist_menu(albums_of_artist):
 
         if choice == 'a':
             artist = albums_of_artist[0].artist
-            create_album(artist)
+            album = create_album(artist)
+            if album is not None:
+                albums_of_artist.append(album)
+                show_albums_by_artist_menu(albums_of_artist)
         elif choice == 'b':
             list_all_artists_menu()
         elif choice == 'm':
