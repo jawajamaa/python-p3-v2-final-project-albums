@@ -19,13 +19,13 @@ def create_genre():
     except Exception as exc:
         print("Encountered an error adding genre ", exc)
 
-def update_genre():
-    coll = input("Enter the genre's name: ")
-    if genre := Genre.find_by_name(coll):
+def update_genre(genre):
+    if genre := Genre.find_by_id(genre.id):
+        print(f'Now working on {genre.name}')
         try:
             name = input("Enter the updated genre name: ")
             if len(name) == 0:
-                print(f'No new name was entered, so there is no change to make to {genre}')
+                print(f'No new name was entered, so there is no change to make to {genre.name}')
             else:
                 print(f'Updating {genre.name}')
                 genre = Genre(name, genre.id)
@@ -34,15 +34,26 @@ def update_genre():
         except Exception as exc:
             print("There was an error updating the genre: ", exc)
     else:
-        print(f'Genre {coll} was not found - please check your spelling and try again')
+        print(f'Genre {genre.name} was not found - please check your spelling and try again')
 
-def delete_genre():
-    name = input("Enter the name of the genre: ")
-    if genre := Genre.find_by_name(name):
-        genre.delete()
-        print(f'Genre {name} deleted')
+def delete_genre(genre):
+    albums_to_delete = Album.find_by_genre(genre)
+
+    if not albums_to_delete:
+        print(f'{genre.name} has no albums!')
+        Genre.delete(genre)
+    # if albums_to_delete := Album.find_by_genre(genre):
+    elif len(albums_to_delete) >= 1:
+        try:
+            for album in albums_to_delete:
+                Album.delete(album)
+            Genre.delete(genre)
+            print(f'Genre {genre.name} and the associated albums deleted')
+        except Exception as exc:
+            print("There was an error deleting {genre.name} and its albums: ", exc)
+
     else:
-        print(f'Genre {name} not found - please check spelling and try again')
+        print(f'Genre {genre.name} not found - please check spelling and try again')
 
 # formatting in cli - blank line for readability
 def final_frontier():
@@ -68,12 +79,6 @@ def space10(num):
 # Albums helper functions
 def list_all_albums():
     return Album.get_all()
-
-# delete below?
-def list_all_genres_of_albums():
-    return Genre.genres_of_albums()
-# def list_all_genres_of_albums():
-#     return Album.genres_of_albums()
 
 def create_album(artist = None):
 

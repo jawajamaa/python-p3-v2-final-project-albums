@@ -110,7 +110,7 @@ class Album:
         CONN.commit()
 
     def delete(self):
-        """Delete the table row corresponding to the current Albums instance, delete the dictionary entry and reassign the id attribute"""
+        """Delete the table row corresponding to the current Albums instance and reassign the id attribute"""
         sql = """
             DELETE FROM albums
             WHERE id = ?    
@@ -132,7 +132,6 @@ class Album:
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
         """
         rows = CURSOR.execute(sql).fetchall()
-
         return [cls.instance_from_db(row) for row in rows]
     
     @classmethod
@@ -167,25 +166,10 @@ class Album:
         """
         rows = CURSOR.execute(sql, (artist,)).fetchall()
         return [cls.instance_from_db(row) for row in rows]
-
-    # @classmethod
-    # def find_by_artist(cls, artist):    
-    #     """Return Album object corresponding to the table row using the artist"""
-    #     sql = """
-    #         SELECT title, artist, year, genres.name, genre_id, albums.id
-    #         FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
-    #         WHERE artist = ?
-    #     """
-    #     row = CURSOR.execute(sql, (artist,)).fetchone()
-    #     return cls.instance_from_db(row) if row else None
     
     @classmethod
     def find_by_genre(cls, genre):
         """Return a list containing an Album object per table row"""
-        # sql = """
-        #     SELECT title, artist, year, id
-        #     FROM albums WHERE genre_id = ?
-        # """
         sql = """
             SELECT title, artist, year, genres.name, genre_id, albums.id
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
@@ -193,23 +177,8 @@ class Album:
         """
         # updated to use genres.id instead of genres.name
 
-        # rows = CURSOR.execute(sql, (genre.id,)).fetchall()
-        # return [cls.instance_from_db(row) for row in rows]
         rows = CURSOR.execute(sql, (genre.id,)).fetchall()
         return [cls.instance_from_db(row) for row in rows]
-
-    # @classmethod
-    # def genres_of_albums(cls):
-    #     # move to Genre class? as it returns genres that have albums or leave here as it returns Only genres that have albums and this is the Album class
-    #     """Return a list containing a genre object per table row"""
-    #     sql = """
-    #         SELECT DISTINCT albums.genre_id, genres.name
-    #         FROM albums, genres
-    #         WHERE albums.genre_id = genres.id; 
-    #     """
-
-    #     rows = CURSOR.execute(sql).fetchall()
-    #     return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
     def all_artists(cls):

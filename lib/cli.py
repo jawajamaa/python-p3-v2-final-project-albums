@@ -1,6 +1,5 @@
 # lib/cli.py
 from models.genre import Genre
-from models.album import Album
 from helpers import (
     exit_program,
     list_all_albums,
@@ -85,14 +84,41 @@ def albums_by_genre_menu():
         line()
         print("Albums by Genre Menu")
         line() 
-        list_of_genres() 
+        # list_of_genres()
+        print(f'{space10(len("Choice"))}Choose from categories')  
+        print("") 
+        all_genres = Genre.get_all()
+        for i, val in enumerate(all_genres, start = 1):  
+            print(f'        {i}    -    {space10(len(val.name))}{val. name}')
+        print("""
+            a   -   Add genre
+            #u  -   Update genre (eg. typing 4u would update album #4 if it is present)
+            #d  -   Delete genre (eg. typing 4d would delete album #4 if it is present)
+            m   -   Back to main menu
+            q   -   Exit the program
+            """)
+        line()
+        line() 
 
-        choice = input(">")
-        for i, genre in enumerate(Genre.get_all(), start = 1):  
+        choice = input(">") 
+        for i, genre in enumerate(all_genres, start = 1):  
             if choice == str(i):
                 albums_of_genre_menu(show_albums_by_genre(genre))
+            elif choice == str(i)+'d':
+                print(f'Are you sure you would like to delete {genre.name}?')
+                print(f'NOTE: this includes all albums of that genre')
+                delete_choice = input(">")
 
-        if choice == 'm':
+                if delete_choice == "Y" or delete_choice == "y":
+                    delete_genre(genre)
+            elif choice == str(i)+'u':
+                update_genre(genre)
+
+        if choice == 'a':
+            create_genre()
+        # elif choice == 'u':
+        #     update_genre()
+        elif choice == 'm':
             main_menu()
         elif choice == 'q':
             exit_program()
@@ -104,7 +130,7 @@ def albums_of_genre_menu(albums):
     while True:
         line()
         line()
-        print("Albums of a Specific Genre Menu")
+        print(f'{albums[0].genre.name} Albums Menu')
         line() 
         headings20()
         line()
@@ -127,7 +153,7 @@ def albums_of_genre_menu(albums):
             q   -   Exit the program
             """)
         choice = input(">")
-        for i, album in enumerate(albums, start = 1):   
+        for i, album in enumerate(albums, start = 1):       
             if choice == str(i):
                 selected_album_menu(album)
             elif choice == str(i)+"d":
@@ -141,7 +167,6 @@ def albums_of_genre_menu(albums):
                     albums_of_genre_menu(albums)
 
         if choice == 'a':
-            breakpoint()
             new_album = create_album_by_genre(albums[0].genre)
             if new_album is not None: 
                 albums.append(new_album)

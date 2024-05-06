@@ -119,17 +119,3 @@ class Genre:
         """
         row = CURSOR.execute(sql, (name.lower(),)).fetchone()
         return cls.instance_from_db(row) if row else None
-
-
-    # @classmethod
-    # def genres_of_albums(cls):
-    #     # move to Genre class? as it returns genres that have albums or leave here as it returns Only genres that have albums and this is the Album class
-    #     """Return a list containing a genre object per table row"""
-    #     sql = """
-    #         SELECT DISTINCT albums.genre_id, genres.name
-    #         FROM albums, genres
-    #         WHERE albums.genre_id = genres.id; 
-    #     """
-
-    #     rows = CURSOR.execute(sql).fetchall()
-    #     return [cls.instance_from_db(row) for row in rows]
