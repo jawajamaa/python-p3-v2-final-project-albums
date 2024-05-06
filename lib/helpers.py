@@ -69,8 +69,11 @@ def space10(num):
 def list_all_albums():
     return Album.get_all()
 
+# delete below?
 def list_all_genres_of_albums():
-    return Album.genres()
+    return Genre.genres_of_albums()
+# def list_all_genres_of_albums():
+#     return Album.genres_of_albums()
 
 def create_album(artist = None):
 

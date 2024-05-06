@@ -11,11 +11,15 @@ class Album:
         self.genre = genre
         self._id = id
 
+# comment out after debugging as it is only used for that...
+    def __repr__(self):
+        return f'[Album id={self._id} artist=\"{self._artist}\" title=\"{self._title}\" year=\"{self._year}\" genre={self._genre}]'
+
     @property
     def id(self):
         return self._id
     
-    # no id setter needed possibly?
+    # no id setter needed...
 
     @property
     def title(self):
@@ -178,26 +182,34 @@ class Album:
     @classmethod
     def find_by_genre(cls, genre):
         """Return a list containing an Album object per table row"""
+        # sql = """
+        #     SELECT title, artist, year, id
+        #     FROM albums WHERE genre_id = ?
+        # """
         sql = """
             SELECT title, artist, year, genres.name, genre_id, albums.id
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
-            WHERE genres.name = ?
+            WHERE genres.id = ?
         """
+        # updated to use genres.id instead of genres.name
 
-        rows = CURSOR.execute(sql, (genre,)).fetchall()
+        # rows = CURSOR.execute(sql, (genre.id,)).fetchall()
+        # return [cls.instance_from_db(row) for row in rows]
+        rows = CURSOR.execute(sql, (genre.id,)).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
-    @classmethod
-    def genres(cls):
-        """Return a list containing a genre object per table row"""
-        sql = """
-            SELECT DISTINCT albums.genre_id, genres.name
-            FROM albums, genres
-            WHERE albums.genre_id = genres.id; 
-        """
+    # @classmethod
+    # def genres_of_albums(cls):
+    #     # move to Genre class? as it returns genres that have albums or leave here as it returns Only genres that have albums and this is the Album class
+    #     """Return a list containing a genre object per table row"""
+    #     sql = """
+    #         SELECT DISTINCT albums.genre_id, genres.name
+    #         FROM albums, genres
+    #         WHERE albums.genre_id = genres.id; 
+    #     """
 
-        rows = CURSOR.execute(sql).fetchall()
-        return [cls.instance_from_db(row) for row in rows]
+    #     rows = CURSOR.execute(sql).fetchall()
+    #     return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
     def all_artists(cls):
