@@ -21,10 +21,11 @@ class Genre:
     
     @name.setter
     def name(self, name):
-        # print("Genre line 23 year setter")
-        if isinstance(self, Genre) and type(name) is str and len(name) >= 1:
+        if isinstance(name, str) and 1 <=len(name) <= 20:
             self._name = name
-
+        else:
+            raise ValueError ("The genre name must be a string between 1 and 30 characters in length")
+    
     @classmethod
     def create_table(cls):
         """Create a new table to persist the attributes of the genres of music"""

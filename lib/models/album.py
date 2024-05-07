@@ -27,17 +27,23 @@ class Album:
     
     @title.setter
     def title(self, title):
-        if isinstance(self, Album) and type(title) is str and len(title) >= 1:
+        if isinstance(title, str) and 1 <= len(title) <= 30:
+        # if isinstance(self, Album) and type(title) is str and len(title) >= 1:
             self._title = title
-    
+        else:
+            raise ValueError ("Title must be a string between 1 and 30 characters in length")
+        
     @property
     def artist(self):
         return self._artist
     
     @artist.setter
     def artist(self, artist):
-        if isinstance(self, Album) and type(artist) is str and len(artist) >= 1:
+        if isinstance(artist, str) and 1 <= len(artist) <= 30:
+        # if isinstance(self, Album) and type(artist) is str and len(artist) >= 1:
             self._artist = artist
+        else:
+            raise ValueError ("Artist must be a string between 1 and 30 characters in length")
 
     @property
     def year(self):
@@ -45,8 +51,10 @@ class Album:
     
     @year.setter
     def year(self, year):
-        if isinstance(self, Album) and len(str(year)) == 4 and type(int(year)) is int:
+        if isinstance(year, int) and len(str(year)) == 4:
             self._year = year
+        else:
+            raise ValueError ("The release year must be a 4 character integer")
 
     @property
     def genre(self):
@@ -106,7 +114,7 @@ class Album:
             SET title = ?, artist = ?, year = ?, genre_id = ? 
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self._title, self._artist, self._year, self._genre.id, self._id))
+        CURSOR.execute(sql, (self.title, self.artist, self.year, self.genre.id, self.id))
         CONN.commit()
 
     def delete(self):
