@@ -15,32 +15,32 @@ def create_genre():
     name = input("Add another music genre: ")
     try:
         genre = Genre.create(name)
-        print(f'Added {genre.name}')
+        print(f'Added \"{genre.name}\"')
     except Exception as exc:
         print("Encountered an error adding genre ", exc)
 
 def update_genre(genre):
     if genre := Genre.find_by_id(genre.id):
-        print(f'Now working on {genre.name}')
+        print(f'Now working on \"{genre.name}\"')
         try:
             name = input("Enter the updated genre name: ")
             if len(name) == 0:
-                print(f'No new name was entered, so there is no change to make to {genre.name}')
+                print(f'No new name was entered, so there is no change to make to \"{genre.name}\"')
             else:
-                print(f'Updating {genre.name}')
+                print(f'Updating \"{genre.name}\"')
                 genre = Genre(name, genre.id)
                 genre.update()
-                print(f'{genre.name} updated')
+                print(f'\"{genre.name}\" updated')
         except Exception as exc:
             print("There was an error updating the genre: ", exc)
     else:
-        print(f'Genre {genre.name} was not found - please check your spelling and try again')
+        print(f'\"{genre.name}\" was not found - please check your spelling and try again')
 
 def delete_genre(genre):
     albums_to_delete = Album.find_by_genre(genre)
 
     if not albums_to_delete:
-        print(f'{genre.name} has no albums!')
+        print(f'\"{genre.name}\" has no albums!')
         Genre.delete(genre)
     # if albums_to_delete := Album.find_by_genre(genre):
     elif len(albums_to_delete) >= 1:
@@ -48,12 +48,12 @@ def delete_genre(genre):
             for album in albums_to_delete:
                 Album.delete(album)
             Genre.delete(genre)
-            print(f'Genre {genre.name} and the associated albums deleted')
+            print(f'\"{genre.name}\" and its associated albums deleted')
         except Exception as exc:
-            print("There was an error deleting {genre.name} and its albums: ", exc)
+            print(f'There was an error deleting \"{genre.name}\" and its albums: ', exc)
 
     else:
-        print(f'Genre {genre.name} not found - please check spelling and try again')
+        print(f'\"{genre.name}\" not found - please check spelling and try again')
 
 # formatting in cli - blank line for readability
 def final_frontier():
@@ -120,11 +120,11 @@ def create_album(artist = None):
         if genre := Genre.find_by_name(genre_name):
             return genre
         else:
-            print(f"My apologies, {genre_name} is an invalid genre")
+            print(f"My apologies, \"{genre_name}\" is an invalid genre")
 
     try:
         album = Album.create(create_title(), create_artist(artist), create_year(), create_genre())
-        print(f'Added {album.title}')
+        print(f'Added \"{album.title}\"')
         return album
     
     except Exception as exc:
@@ -143,7 +143,7 @@ def update_album():
                 print(f'No new name was entered, so there is no change to make...')
                 title = album_dupe.title
             else:
-                print(f'Updating {title}')
+                print(f'Updating \"{title}\"')
                 album.title = title
 
             artist = input("Enter the updated artist name: ")
@@ -151,7 +151,7 @@ def update_album():
                 print(f'No new or updated name was entered, so there is no change to make...')
                 artist = album_dupe.artist
             else:
-                print(f'Updating {title}\'s {artist}')
+                print(f'Updating {artist} of \"{title}\"')
                 album.artist = artist
 
             year = input("Enter the updated album release year: ")
@@ -162,7 +162,7 @@ def update_album():
                 print(f'The year entered needs to be 4 digits, so there is no change that can be made to the album\'s release year ')
                 year = album_dupe.year
             else:
-                print(f'Updating {title}\'s release year of {year}')
+                print(f'Updating release year of {year} for \"{title}\"')
                 album.year = year
             
             genre = input("Enter the updated genre from the list of genres: ")
@@ -175,7 +175,7 @@ def update_album():
 
             album = Album(title, artist, year, genre, album.id )
             album.update()
-            print(f'{artist}\'s album, {title} first released in {year} and classified as {genre.name} updated')
+            print(f'{artist}\'s album, \"{title}\" first released in {year} and classified as {genre.name} updated')
         except Exception as exc:
             print("There was an error updating the album: ", exc)
     else:
@@ -185,9 +185,9 @@ def delete_album():
     title = input("Enter the title of the album: ")
     if album := Album.find_by_title(title):
         album.delete()
-        print(f'Album {album.title} deleted')
+        print(f'Album \"{album.title}\" deleted')
     else:
-        print(f'Album {album} not found - please check spelling and try again')
+        print(f'Album \"{album}\" not found - please check spelling and try again')
 
 def show_albums_by_genre(selected_genre):
     return Album.find_by_genre(selected_genre)
@@ -224,7 +224,7 @@ def create_album_by_genre(selected_genre):
 
     try:
         album = Album.create(create_title(), create_artist(), create_year(), selected_genre)
-        print(f'Added {album.title}')
+        print(f'Added \"{album.title}\"')
         return album
     
     except Exception as exc:
@@ -248,7 +248,7 @@ def update_album_by_genre(album):
                 print(f'No new or updated name was entered, so there is no change to make...')
                 artist = album_dupe.artist
             else:
-                print(f'Updating {title}\'s {artist}')
+                print(f'Updating {artist} of \"{title}\"')
                 album.artist = artist
 
             year = input("Enter the updated album release year: ")
@@ -259,16 +259,16 @@ def update_album_by_genre(album):
                 print(f'The year entered needs to be 4 digits, so there is no change that can be made to the album\'s release year ')
                 year = album_dupe.year
             else:
-                print(f'Updating {title}\'s release year of {year}')
+                print(f'Updating release year of {year} for \"{title}\"')
                 album.year = year   
 
             updated_album = Album(title, artist, year, album.genre, album.id )
             updated_album.update()
-            print(f'{artist}\'s album, {title} first released in {year} and classified as {album.genre.name} has been updated')
+            print(f'{artist}\'s album, \"{title}\" first released in {year} and classified as {album.genre.name} has been updated')
         except Exception as exc:
             print("There was an error updating the album: ", exc)
 
 
 def delete_album_by_genre(album):
     album.delete()
-    print(f'Album {album.title} deleted')
+    print(f'Album \"{album.title}\" deleted')

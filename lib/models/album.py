@@ -51,7 +51,7 @@ class Album:
     
     @year.setter
     def year(self, year):
-        if isinstance(year, int) and len(str(year)) == 4:
+        if isinstance(int(year), int) and len(str(year)) == 4:
             self._year = year
         else:
             raise ValueError ("The release year must be a 4 character integer")
@@ -183,7 +183,6 @@ class Album:
             FROM albums LEFT JOIN genres ON (genres.id = albums.genre_id)
             WHERE genres.id = ?
         """
-        # updated to use genres.id instead of genres.name
 
         rows = CURSOR.execute(sql, (genre.id,)).fetchall()
         return [cls.instance_from_db(row) for row in rows]

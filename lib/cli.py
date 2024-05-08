@@ -23,10 +23,10 @@ from helpers import (
 )
 
 def headings20():
-    print(space20(len("Year")),"Album Title",space30(len("Artist")),"Artist",space20(len("spacers")), "Year",space10(len("Artistry")), "Category",space10(len("Category")))
+    print(space20(len("Year")),"Album Title",space30(len("Artist")),"Artist",space20(len("spacers")), "Year",space10(len("Artistry")), "Genre",space10(len("Category")))
 
 def headings30():
-    print(space30(len("Year")),"Album Title",space30(len("Artist")),"Artist",space20(len("spacers")), "Year",space10(len("Artistry")), "Category",space10(len("Category")))
+    print(space30(len("Year")),"Album Title",space30(len("Artist")),"Artist",space20(len("spacers")), "Year",space10(len("Artistry")), "Genre",space10(len("Category")))
 
 def main():
     line()
@@ -66,13 +66,13 @@ def main_menu():
 
 # below is to refactor listing genres out so it can be called from helpers line 109 and below line 88
 def list_of_genres():
-    print(f'{space10(len("Choice"))}Choose from categories')  
+    print(f'{space10(len("Choice"))}Choose from the Genres by entering the corresponding number')  
     print("") 
     for i, val in enumerate(Genre.get_all(), start = 1):  
         print(f'        {i}    -    {space10(len(val.name))}{val. name}')
     print("""
-        m  -   Back to main menu
-        q  -   Exit the program
+        m  -   Main menu
+        q  -   Quit the program
         """)
     line()
     line()  
@@ -85,7 +85,7 @@ def albums_by_genre_menu():
         print("Albums by Genre Menu")
         line() 
         # list_of_genres()
-        print(f'{space10(len("Choice"))}Choose from categories')  
+        print(f'{space10(len("Choice"))}Choose from the Genres by entering the corresponding number')  
         print("") 
         all_genres = Genre.get_all()
         for i, val in enumerate(all_genres, start = 1):  
@@ -94,8 +94,8 @@ def albums_by_genre_menu():
             a   -   Add genre
             #u  -   Update genre (eg. typing 4u would update album #4 if it is present)
             #d  -   Delete genre (eg. typing 4d would delete album #4 if it is present)
-            m   -   Back to main menu
-            q   -   Exit the program
+            m   -   Main menu
+            q   -   Quit the program
             """)
         line()
         line() 
@@ -105,7 +105,7 @@ def albums_by_genre_menu():
             if choice == str(i):
                 albums_of_genre_menu(show_albums_by_genre(genre))
             elif choice == str(i)+'d':
-                print(f'Are you sure you would like to delete {genre.name}?')
+                print(f'Are you sure you would like to delete \"{genre.name}\"?')
                 print(f'NOTE: this includes all albums of that genre')
                 delete_choice = input(">")
 
@@ -146,9 +146,9 @@ def albums_of_genre_menu(albums):
             
             a   -   Add albums in genre
             #d  -   Delete album in genre (eg. typing 4d would delete album #4 if it is present)
-            m   -   Back to main menu
+            m   -   Main menu
             b   -   Back to Albums by Genre Menu
-            q   -   Exit the program
+            q   -   Quit the program
             """)
         choice = input(">")
         for i, album in enumerate(albums, start = 1):       
@@ -183,7 +183,7 @@ def selected_album_menu(album):
     while True:
         line()
         line()
-        print("Selected Album Menu")
+        print(f'You\'re now viewing \"{album.title}\"' )
         line() 
         headings20()
         line()
@@ -196,8 +196,8 @@ def selected_album_menu(album):
             
             u   -   Update album
             d   -   Delete album
-            m   -   Back to main menu
-            q   -   Exit the program
+            m   -   Main menu
+            q   -   Quit the program
             """)
         
         choice = input(">")
@@ -231,8 +231,8 @@ def list_all_artists_menu():
               view, update or delete their albums
 
             l   -   List all Albums  
-            m   -   Back to main menu
-            q   -   Exit the program
+            m   -   Main menu
+            q   -   Quit the program
             """)
         line()
         line()
@@ -264,7 +264,7 @@ def show_albums_by_artist_menu(albums_of_artist):
     while True:
         line()
         line()
-        print("Selected Artists's Albums Menu")
+        print(f'Albums by {albums_of_artist[0].artist}')
         line() 
         headings20()
         line()
@@ -277,8 +277,8 @@ def show_albums_by_artist_menu(albums_of_artist):
             
             a   -   Add an album by current artist
             b   -   Back to previous menu
-            m   -   Back to main menu
-            q   -   Exit the program
+            m   -   Main menu
+            q   -   Quit the program
             """)
         
         choice = input(">")
@@ -303,18 +303,19 @@ def show_albums_by_artist_menu(albums_of_artist):
             print("Please choose one of the listed options") 
 
 
+# below are 'admin' menus that are live, but unlabled as they did not illustrate the OOP concepts
 def album_menu():
     while True:
         line()
         line()
         print("Album Menu")
         print("""
-            l  -   List all Albums
-            a  -   Add new Album
-            u  -   Update existing Album
-            d  -   Delete existing Album
-            m  -   Back to main menu
-            q  -   Exit the program
+            l   -   List all Albums
+            a   -   Add new Album
+            u   -   Update existing Album
+            d   -   Delete existing Album
+            m   -   Main menu
+            q   -   Quit the program
             """)
         line()
         line()
@@ -349,12 +350,12 @@ def genre_menu():
         line()
         print("Genre Menu")
         print("""
-            l  -   List all genres
-            a  -   Add new genre
-            u  -   Update existing genre
-            d  -   Delete existing genre
-            m  -   Back to main menu
-            q  -   Exit the program
+            l   -   List all genres
+            a   -   Add new genre
+            u   -   Update existing genre
+            d   -   Delete existing genre
+            m   -   Main menu
+            q   -   Quit the program
             """)
         line()
         line()
