@@ -192,6 +192,10 @@ def delete_album():
 def show_albums_by_genre(selected_genre):
     return Album.find_by_genre(selected_genre)
 
+    # if not Album.find_by_genre(selected_genre):
+    #     return selected_genre
+    
+
 def list_all_albums_by_artist(selected_artist):
     return Album.find_by_artist(selected_artist)
 

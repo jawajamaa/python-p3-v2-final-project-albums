@@ -128,7 +128,18 @@ def albums_of_genre_menu(albums):
     while True:
         line()
         line()
-        print(f'{albums[0].genre.name} Albums Menu')
+        if isinstance(albums, list) and albums != []:
+            # breakpoint()
+            print(f'{albums[0].genre.name} Albums Menu')
+        else:
+            print("Selected Albums Menu")
+# commented code here, ln 154 and in helpers is to attempt to deal with bug re: adding albums to a genre that doesn't already have albums due to not being able to iterate over an empty list, so I was returning a genre if the list was empty, but then have to deal with separating that...
+        # if isinstance(albums, list):
+        #     print(f'{albums[0].genre.name} Albums Menu')
+        # elif isinstance(albums, Genre):  
+        #     print(f'{albums.name} Albums Menu')
+        # else:
+        #     print(f'Selected Albums Menu')
         line() 
         headings20()
         line()
@@ -140,6 +151,13 @@ def albums_of_genre_menu(albums):
                 ''') 
         else:
             print("There are currently no albums of this genre currently stored in the database") 
+        # if isinstance(albums, Genre) or not len(albums):
+        #     print("There are currently no albums of this genre currently stored in the database") 
+        # else:
+        #     for i, album in enumerate(albums, start = 1):   
+        #         print(f'''
+        #             {i}{" - "}{album.title}{space30(len(album.title))}{album.artist}{space20(len(album.artist))}{album.year}{space10(len(str(album.year)))}{album.genre.name}
+        #         ''') 
         print("""
             Please select an option from below
               or a number of an album from above
